@@ -12,3 +12,15 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+
+#textarea {
+    max-width: 420px;
+    margin-left: 150px;
+    padding-bottom: 140px;
+}
+
+.hide-on-med-and-down {
+    margin-right: 70px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
