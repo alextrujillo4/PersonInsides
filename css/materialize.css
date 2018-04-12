@@ -796,7 +796,7 @@
 }
 
 .light-blue.lighten-1 {
-  background-color: #29b6f6 !important;
+  background-color: #212121 !important;
 }
 
 .light-blue-text.text-lighten-1 {
@@ -1652,7 +1652,7 @@
 }
 
 .orange {
-  background-color: #ff9800 !important;
+  background-color: #BDBDBD !important;
 }
 
 .orange-text {
@@ -2557,7 +2557,7 @@ ul:not(.browser-default) > li {
 }
 
 a {
-  color: #039be5;
+  color: #3D5AFE;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
