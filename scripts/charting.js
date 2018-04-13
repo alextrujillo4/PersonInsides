@@ -2,10 +2,10 @@ var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'radar',
     data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: ["Apertura a Experimentar", "Responsabilidad", "Extrovertido", "Cordialidad", "Estado Emocional"],
         datasets: [{
             label: 'Personalidad',
-            data: [12, 19, 8, 10, 13, 7],
+            data: [12, 19, 8, 10, 13],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
