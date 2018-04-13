@@ -12,31 +12,52 @@
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-  <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container">
-        <a id="logo-container" href="#" class="brand-logo">Logotipo</a>
-
-      <!--ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Navbar Link</a></li>
-      </ul
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>-->
-    </div>
-  </nav>
+    <nav class="nav-extended grey darken-4">
+      <div class="nav-wrapper">
+        <a href="#!" class="brand-logo"style="margin-left:8px"  >Logo</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a>A link</a></li>
+          <li><a>A second link</a></li>
+          <li><a>A third link</a></li>
+        </ul>
+      </div>
+      <div class="nav-content">
+        <span class="nav-title"style="margin-left:8px">Personalidad del Estudiante</span>
+        <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
+          <i class="material-icons">add</i>
+        </a>
+      </div>
+    </nav>
 
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">
       <br><br>
       <h1 class="header center orange-text">Personalidad del Estudiante</h1>
-      <div class="row center">
-        <h5 class="header col s12 light">Descripción</h5>
+      <div class="row">
+
+
+
+     <form class="col s12 card white">
+
+       <div class="row" style="padding:40px">
+         <div class="input-field card-content col s12">
+           <textarea id="textarea2" class="materialize-textarea" data-length="1500"></textarea>
+           <label for="textarea2">Escribe aquí</label>
+         </div>
+
+       </div>
+       <div class="card-action">
+        <a href="#" style="color:#304FFE">Subir desde computadora</a>
+        <a class="waves-effect waves-light indigo accent-4 btn"><i class="material-icons right">find_in_page</i>Analizar</a>
       </div>
-      <div class="organ_textarea">
-          <textarea name="text_here" id="textarea" cols="20" rows="10"></textarea>
-      </div>
+     </form>
+
+
+   </div>
       <br>
       <ul class="right hide-on-med-and-down">
         <li>
-          <a href="#" id="download-button" class="btn-large waves-effect waves-light orange">Subir</a>
+
         </li>
       </ul>
       <br>
