@@ -12,25 +12,3 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
-
-#textarea {
-    padding-bottom: 140px;
-    display: block;
-}
-
-.hide-on-med-and-down {
-    margin-right: 70px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
-
-#download-button {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    display: inline-block;
-}
-
-.organ_textarea {
-    justify-content: center;
-    align-items: center;
-}
