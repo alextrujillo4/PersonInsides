@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+/*var mysql = require('mysql');
 
 var pool  = mysql.createPool({
  connectionLimit : 10,
@@ -60,7 +60,7 @@ console.log(json.wordcount);
 //               }
 //       });
 
-/*//Establish connection
+//Establish connection
 pool.getConnection(function(err, connection) {
   if(err){
     return console.error('error'+err.message);
@@ -71,9 +71,9 @@ pool.getConnection(function(err, connection) {
   //Release connection
   connection.release();
 });
-*/
+
 
 pool.query("INSERT INTO Profile (name,word_count,processed_Language,id_User) VALUES ('" + name + "','" + word_Count + "','" + lang + "','" + id_user + "');",function(err,rows){
         if(err) throw err;
         console.log('yuju');
-});
+});*/

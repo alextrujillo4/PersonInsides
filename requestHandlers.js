@@ -1,8 +1,6 @@
 var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
 var fs = require('fs');
-
 var mysql = require('mysql');
-
 var pool  = mysql.createPool({
  connectionLimit : 10,
  host            : 'localhost',
@@ -11,10 +9,9 @@ var pool  = mysql.createPool({
  database        : 'test'
 });
 
-var name = 'Prueba';
-//var word_Count = 2020;
-//var lang = 'es';
+var name = 'Prueba2';
 var id_user = 'prueba@test.com';
+var id = 0
 
 function start(response, postData) {
 	console.log("Request handler 'start' was called.");
@@ -143,7 +140,6 @@ function piService(response,postData){
 
 	// Envia los parametros a Personality Insights
 	personality_insights.profile(params, function(error, json) {
-
 		if (error){
 			console.log('Error:', error);
 			response.end();
@@ -161,10 +157,37 @@ function piService(response,postData){
 			response.writeHead(200, {"Content-Type": "application/json"});
 			response.end(JSON.stringify(json));*/
 
-			pool.query("INSERT INTO Profile (name,word_count,processed_Language,id_User) VALUES ('" + name + "','" + json.word_count + "','" + "en" + "','" + id_user + "');",function(err,rows){
-		          if(err) throw err;
-		          console.log('yuju');
-		  });
+      //Create profile in database
+      pool.query("INSERT INTO Profile (name,word_count,processed_Language,id_User,fecha) VALUES ('" + name + "','" + json.word_count + "','" + json.processed_language + "','" + id_user + "', NOW());",function(err,rows){
+              if(err) throw err;
+              console.log('PERFIL CREADO');
+
+              //Sacar el id
+              pool.query("SELECT id FROM profile WHERE id_User = '" + id_user + "';",function(err,rows){
+                        if(err) throw err;
+                        console.log(rows);
+                        id = rows.id[0];
+                        console.log(id);
+                        /*
+                        for (var iA = 0; iA < 5; iA++) {
+                          pool.query("INSERT INTO Trait (trait_id,name,percentil,category,profile_id, child_Of) VALUES ('" + json.personality[iA].trait_id + "','" +  json.personality[iA].name + "','" + json.personality[iA].percentile + "','" +  json.personality[iA].category+ "'," + 1 + ", NULL);",function(err,rows){
+                    		          if(err) throw err;
+                    		          console.log('Big Five Creado');
+                    		  });
+                          //Insert children of each big_5
+                          for (var iB = 0; iB < json.personality[iA].children.length; iB++) {
+                            pool.query("INSERT INTO Trait (trait_id,name,percentil,category,profile_id, child_Of) VALUES ('" + json.personality[iA].children[iB].trait_id + "','" +  json.personality[iA].children[iB].name + "','" + json.personality[iA].children[iB].percentile + "','" +  json.personality[iA].children[iB].category + "','" + 1 + "','" +json.personality[iA].trait_id + "');",function(err,rows){
+                                      if(err) throw err;
+                                      console.log('Children Created');
+                              });
+                          }
+                        }
+                        */
+                });
+      });
+
+
+
 
 			fs.writeFile('savedProfile.json', JSON.stringify(json, null, 2), function (err) {
 				  if (err)
