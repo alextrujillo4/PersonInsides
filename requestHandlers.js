@@ -166,7 +166,6 @@ function piService(response,postData){
               //Sacar el id
               pool.query("SELECT id FROM profile WHERE id_User = '" + id_user + "' ORDER BY id desc LIMIT 1;",function(err,rows){
                         var papasCreados = 0;
-
                         if(err) throw err;
                         valuesFromSelection = rows;
                         id = valuesFromSelection[0].id;
@@ -202,10 +201,27 @@ function piService(response,postData){
                                     }
                                 }
                     		  });
-
-
-
                         }
+
+                        for (var iC = 0; iC < json.needs.length; iC++) {
+                          pool.query("INSERT INTO Trait (trait_id,name,percentile,category,profile_id, child_Of) VALUES ('" + json.needs[iC].trait_id
+                          + "','" +  json.needs[iC].name + "','" + json.needs[iC].percentile + "','" +  json.needs[iC].category
+                          + "'," + id + ", NULL);",function(err,rows){
+                                    if(err) throw err;
+                                    console.log('NEED Created');
+                            });
+                        }
+
+
+                        for (var iD = 0; iD < json.values.length; iD++) {
+                          pool.query("INSERT INTO Trait (trait_id,name,percentile,category,profile_id, child_Of) VALUES ('" + json.values[iD].trait_id
+                          + "','" +  json.values[iD].name + "','" + json.values[iD].percentile + "','" +  json.values[iD].category
+                          + "'," + id + ", NULL);",function(err,rows){
+                                    if(err) throw err;
+                                    console.log('VALUE Created');
+                            });
+                        }
+
 
                 });
       });
