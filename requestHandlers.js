@@ -11,7 +11,8 @@ var pool  = mysql.createPool({
 
 var name = 'Prueba2';
 var id_user = 'prueba@test.com';
-var id = 0
+var valuesFromSelection = [];
+var id = 0;
 
 function start(response, postData) {
 	console.log("Request handler 'start' was called.");
@@ -163,26 +164,49 @@ function piService(response,postData){
               console.log('PERFIL CREADO');
 
               //Sacar el id
-              pool.query("SELECT id FROM profile WHERE id_User = '" + id_user + "';",function(err,rows){
+              pool.query("SELECT id FROM profile WHERE id_User = '" + id_user + "' ORDER BY id desc LIMIT 1;",function(err,rows){
+                        var papasCreados = 0;
+
                         if(err) throw err;
-                        console.log(rows);
-                        id = rows.id[0];
-                        console.log(id);
-                        /*
+                        valuesFromSelection = rows;
+                        id = valuesFromSelection[0].id;
+
                         for (var iA = 0; iA < 5; iA++) {
-                          pool.query("INSERT INTO Trait (trait_id,name,percentil,category,profile_id, child_Of) VALUES ('" + json.personality[iA].trait_id + "','" +  json.personality[iA].name + "','" + json.personality[iA].percentile + "','" +  json.personality[iA].category+ "'," + 1 + ", NULL);",function(err,rows){
+                          pool.query("INSERT INTO Trait (trait_id,name,percentile,category,profile_id, child_Of) VALUES ('" + json.personality[iA].trait_id + "','" +  json.personality[iA].name + "','" + json.personality[iA].percentile + "','" +  json.personality[iA].category+ "'," + id + ", NULL);",function(err,rows){
                     		          if(err) throw err;
-                    		          console.log('Big Five Creado');
+                    		          console.log("Big Five Creado");
+                                  papasCreados++;
+                                  console.log(papasCreados);
+                                  //Insert children of each big_5
+
+                                  if(papasCreados>=5){
+                                    console.log("YA VOY A CREAR LOS HIJOS");
+                                      for(iA = 0; iA<5; iA++){
+                                      for (var iB = 0; iB < json.personality[iA].children.length; iB++) {
+                                        console.log(json.personality[iA].name+"\n");
+
+                                      console.log( json.personality[iA].children[iB].trait_id );
+                                      console.log( json.personality[iA].children[iB].name);
+                                      console.log( json.personality[iA].children[iB].percentile);
+                                      console.log( json.personality[iA].children[iB].category);
+                                      console.log(id);
+                                      console.log( json.personality[iA].trait_id);
+
+                                      pool.query("INSERT INTO Trait (trait_id,name,percentile,category,profile_id, child_Of) VALUES ('" + json.personality[iA].children[iB].trait_id
+                                      + "','" +  json.personality[iA].children[iB].name + "','" + json.personality[iA].children[iB].percentile + "','" +  json.personality[iA].children[iB].category
+                                      + "'," + id + ",'" + json.personality[iA].trait_id + "');",function(err,rows){
+                                                if(err) throw err;
+                                                console.log('Children Created');
+                                        });
+                                      }
+                                    }
+                                }
                     		  });
-                          //Insert children of each big_5
-                          for (var iB = 0; iB < json.personality[iA].children.length; iB++) {
-                            pool.query("INSERT INTO Trait (trait_id,name,percentil,category,profile_id, child_Of) VALUES ('" + json.personality[iA].children[iB].trait_id + "','" +  json.personality[iA].children[iB].name + "','" + json.personality[iA].children[iB].percentile + "','" +  json.personality[iA].children[iB].category + "','" + 1 + "','" +json.personality[iA].trait_id + "');",function(err,rows){
-                                      if(err) throw err;
-                                      console.log('Children Created');
-                              });
-                          }
+
+
+
                         }
-                        */
+
                 });
       });
 
@@ -235,7 +259,7 @@ function lastProfile(response,postData){
 		} else{
 			var json = JSON.parse(data);
 			console.log("About to send the contents of the file savedProfile.json");
-			console.log(JSON.stringify(json));
+			//console.log(JSON.stringify(json));
 			response.writeHead(200, {"Content-Type": "application/json"});
 			response.end(JSON.stringify(json));
 		}
