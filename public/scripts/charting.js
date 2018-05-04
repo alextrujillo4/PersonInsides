@@ -210,18 +210,18 @@
 
                       series: [{
                         data: [
-                          { x: 0, y: 0, z: dataReceived.needs[1].percentile*100, name: 'Retos', country: 'Retos', color: '#FF5722' },
-                          { x: 74.5, y: 102.9, z: dataReceived.needs[1].percentile*100, name: 'Reservarse', country: 'Reservarse', color: '#FF9800'},
-                          { x: 72.8, y: 91.5, z: dataReceived.needs[2].percentile*100, name: 'Curiosidad', country: 'Curiosidad', color: '#E91E63'},
-                          { x: 70.4, y: 120.5, z: dataReceived.needs[3].percentile*100, name: 'Emoción', country: 'Emoción', color: '#FFEB3B'},
-                          { x: 73.3, y: 55.1, z: dataReceived.needs[4].percentile*100, name: 'Armonía', country: 'Armonía', color: '#673AB7'},
-                          { x: 69.4, y: 69.1, z: dataReceived.needs[5].percentile*100, name: 'Ideales', country: 'Ideales', color: '#8BC34A'},
-                          { x: 66.2, y: 48.5, z: dataReceived.needs[6].percentile*100, name: 'Libertad', country: 'Libertad', color: '#4CAF50'},
-                          { x: 66.5, y: 86.1, z: dataReceived.needs[7].percentile*100, name: 'Amor', country: 'Amor', color: '#009688'},
-                          { x: 63, y: 93.2, z: dataReceived.needs[8].percentile*100, name: 'Práctico', country: 'Práctico', color: '#00BCD4'},
-                          { x: 63.2, y: 57.6, z: dataReceived.needs[9].percentile*100, name: 'Expresivo', country: 'Expresivo', color: '#9C27B0'},
-                          { x: 60.6, y: 30, z: dataReceived.needs[10].percentile*100, name: 'Estabilidad', country: 'Estabilidad', color: '#2196F3'},
-                          { x: 61.5, y: 126.4, z: dataReceived.needs[11].percentile*100, name: 'Estructura', country: 'Estructura', color: '#3F51B5'},
+                          { x: 0, y: 0, z: dataReceived.needs[0].percentile*100, name: 'Retos', country: 'Retos', color: '#FF5722' },
+                          { x: 5, y: 5, z: dataReceived.needs[1].percentile*100, name: 'Reservarse', country: 'Reservarse', color: '#FF9800'},
+                          { x: 10, y: 10, z: dataReceived.needs[2].percentile*100, name: 'Curiosidad', country: 'Curiosidad', color: '#E91E63'},
+                          { x: 15, y: 15, z: dataReceived.needs[3].percentile*100, name: 'Emoción', country: 'Emoción', color: '#FFEB3B'},
+                          { x: 20, y: 20, z: dataReceived.needs[4].percentile*100, name: 'Armonía', country: 'Armonía', color: '#673AB7'},
+                          { x: 25, y: 25, z: dataReceived.needs[5].percentile*100, name: 'Ideales', country: 'Ideales', color: '#8BC34A'},
+                          { x: 30, y: 30, z: dataReceived.needs[6].percentile*100, name: 'Libertad', country: 'Libertad', color: '#4CAF50'},
+                          { x: 35, y: 35, z: dataReceived.needs[7].percentile*100, name: 'Amor', country: 'Amor', color: '#009688'},
+                          { x: 40, y: 40, z: dataReceived.needs[8].percentile*100, name: 'Práctico', country: 'Práctico', color: '#00BCD4'},
+                          { x: 45, y: 45, z: dataReceived.needs[9].percentile*100, name: 'Expresivo', country: 'Expresivo', color: '#9C27B0'},
+                          { x: 50, y: 50, z: dataReceived.needs[10].percentile*100, name: 'Estabilidad', country: 'Estabilidad', color: '#2196F3'},
+                          { x: 55, y: 55, z: dataReceived.needs[11].percentile*100, name: 'Estructura', country: 'Estructura', color: '#3F51B5'},
                         ]
                       }]
 
