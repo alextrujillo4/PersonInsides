@@ -1,0 +1,22 @@
+{
+  "name": "personalityinsights",
+  "version": "1.0.0",
+  "description": "node auth system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alextrujillo4/PersonInsides.git"
+  },
+  "keywords": [
+    "zz<zccx"
+  ],
+  "author": "mostla developers",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alextrujillo4/PersonInsides/issues"
+  },
+  "homepage": "https://github.com/alextrujillo4/PersonInsides#readme"
+}
