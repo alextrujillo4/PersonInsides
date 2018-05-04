@@ -43,11 +43,11 @@
                     var agreeableness = dataReceived.personality[3].percentile;
                     var emotionalRange = dataReceived.personality[4].percentile;
 
-
+                    //Grafica de big5
                     var myChart = new Chart(ctx, {
                         type: 'radar',
                         data: {
-                            labels: ["Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Emotional range"],
+                            labels: ["Apertura", "Consciencia", "Extroversión", "Amabilidad", "Estabilidad emocional"],
                             datasets: [{
                                 label: 'Personalidad',
                                 data: [openness, conscientiousness, extraversion, agreeableness, emotionalRange],
@@ -82,7 +82,7 @@
                     });
 
                     // SQUARE CHART STARTS //
-
+                    //Grafica de valores
                     Highcharts.chart('container2', {
                         series: [{
                             type: "treemap",
@@ -124,24 +124,24 @@
                                 color: '#8BC34A'
                             }, {
                                 parent: 'A',
-                                name: 50 + "<h1>%</h1>",
-                                value: 50
+                                name: dataReceived.values[0].percentile*100 + "<h1>%</h1>",
+                                value: dataReceived.values[0].percentile*100
                             }, {
                                 parent: 'B',
-                                name: 30 + "<h1>%</h1>",
-                                value: 30
+                                name: dataReceived.values[1].percentile*100 + "<h1>%</h1>",
+                                value: dataReceived.values[1].percentile*100
                             }, {
                                 parent: 'C',
-                                name: 40 + "<h1>%</h1>",
-                                value: 40
+                                name: dataReceived.values[2].percentile*100 + "<h1>%</h1>",
+                                value: dataReceived.values[2].percentile*100
                             }, {
                                 parent: 'D',
-                                name: 40 + "<h1>%</h1>",
-                                value: 40
+                                name: dataReceived.values[3].percentile*100 + "<h1>%</h1>",
+                                value: dataReceived.values[3].percentile*100
                             }, {
                                 parent: 'E',
-                                name: 100 + "<h1>%</h1>",
-                                value: 100
+                                name: dataReceived.values[4].percentile*100 + "<h1>%</h1>",
+                                value: dataReceived.values[4].percentile*100
                             }]
                         }],
                         title: {
@@ -151,8 +151,9 @@
 
                     // SQUARE CHARTS ENDS //
 
-                    // BUBBLE CHARTS STARTS //
 
+                    // BUBBLE CHARTS STARTS //
+                    //Grafica de necesidades
                     Highcharts.chart('container3', {
 
                       chart: {
@@ -209,18 +210,18 @@
 
                       series: [{
                         data: [
-                          { x: 65, y: 125, z: .19, name: 'Retos', country: 'Retos', color: '#FF5722' },
-                          { x: 74.5, y: 102.9, z: .14, name: 'Reservarse', country: 'Reservarse', color: '#FF9800'},
-                          { x: 72.8, y: 91.5, z: .25, name: 'Curiosidad', country: 'Curiosidad', color: '#E91E63'},
-                          { x: 70.4, y: 120.5, z: .42, name: 'Emoción', country: 'Emoción', color: '#FFEB3B'},
-                          { x: 73.3, y: 55.1, z: .81, name: 'Armonía', country: 'Armonía', color: '#673AB7'},
-                          { x: 69.4, y: 69.1, z: .96, name: 'Ideales', country: 'Ideales', color: '#8BC34A'},
-                          { x: 66.2, y: 48.5, z: .14, name: 'Libertad', country: 'Libertad', color: '#4CAF50'},
-                          { x: 66.5, y: 86.1, z: .70, name: 'Amor', country: 'Amor', color: '#009688'},
-                          { x: 63, y: 93.2, z: .24, name: 'Práctico', country: 'Práctico', color: '#00BCD4'},
-                          { x: 63.2, y: 57.6, z: .60, name: 'Expresivo', country: 'Expresivo', color: '#9C27B0'},
-                          { x: 60.6, y: 30, z: .46, name: 'Estabilidad', country: 'Estabilidad', color: '#2196F3'},
-                          { x: 61.5, y: 126.4, z: .95, name: 'Estructura', country: 'Estructura', color: '#3F51B5'},
+                          { x: 0, y: 0, z: dataReceived.needs[1].percentile*100, name: 'Retos', country: 'Retos', color: '#FF5722' },
+                          { x: 74.5, y: 102.9, z: dataReceived.needs[1].percentile*100, name: 'Reservarse', country: 'Reservarse', color: '#FF9800'},
+                          { x: 72.8, y: 91.5, z: dataReceived.needs[2].percentile*100, name: 'Curiosidad', country: 'Curiosidad', color: '#E91E63'},
+                          { x: 70.4, y: 120.5, z: dataReceived.needs[3].percentile*100, name: 'Emoción', country: 'Emoción', color: '#FFEB3B'},
+                          { x: 73.3, y: 55.1, z: dataReceived.needs[4].percentile*100, name: 'Armonía', country: 'Armonía', color: '#673AB7'},
+                          { x: 69.4, y: 69.1, z: dataReceived.needs[5].percentile*100, name: 'Ideales', country: 'Ideales', color: '#8BC34A'},
+                          { x: 66.2, y: 48.5, z: dataReceived.needs[6].percentile*100, name: 'Libertad', country: 'Libertad', color: '#4CAF50'},
+                          { x: 66.5, y: 86.1, z: dataReceived.needs[7].percentile*100, name: 'Amor', country: 'Amor', color: '#009688'},
+                          { x: 63, y: 93.2, z: dataReceived.needs[8].percentile*100, name: 'Práctico', country: 'Práctico', color: '#00BCD4'},
+                          { x: 63.2, y: 57.6, z: dataReceived.needs[9].percentile*100, name: 'Expresivo', country: 'Expresivo', color: '#9C27B0'},
+                          { x: 60.6, y: 30, z: dataReceived.needs[10].percentile*100, name: 'Estabilidad', country: 'Estabilidad', color: '#2196F3'},
+                          { x: 61.5, y: 126.4, z: dataReceived.needs[11].percentile*100, name: 'Estructura', country: 'Estructura', color: '#3F51B5'},
                         ]
                       }]
 
