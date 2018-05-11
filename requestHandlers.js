@@ -31,7 +31,7 @@ function start(response, postData) {
 				'</html>';*/
 
 	response.writeHead(200, {"Content-Type": "text/html"});
-	fs.readFile('./public/index.html', null, function (error,data){
+	fs.readFile('./public/login.html', null, function (error,data){
 
 		if (error){
 			response.writeHead(404);
@@ -48,6 +48,27 @@ function start(response, postData) {
 	//response.end();
 
 }
+
+function principal(response, postData) {
+	console.log("Request handler 'upload' was called.");
+  //Get name and email from login (for execution of queries)
+  console.log(postData);
+	fs.readFile('./public/index.html', null, function (error,data){
+
+		if (error){
+			console.log("No file found at location ... index");
+			response.writeHead(404);
+			response.write('File not found! index');
+		} else{
+			response.writeHead(200, {"Content-Type": "text/html"});
+			response.write(data);
+		}
+
+		response.end();
+
+	});
+}
+
 
 function upload(response, postData) {
 	console.log("Request handler 'upload' was called.");
@@ -123,6 +144,7 @@ function piService(response,postData){
 	console.log("Request handler 'piService' was called.");
 	console.log("'piService' handler received: ");
 	// + postData);
+  console.log(postData);
 
 	var personality_insights = new PersonalityInsightsV3({
 	    username: 'ebc5e198-5f1b-4353-ae47-810792af98d0',
@@ -288,7 +310,7 @@ function lastProfile(response,postData){
 }
 
 
-
+exports.principal = principal;
 exports.start = start;
 exports.upload = upload;
 exports.cssContent = cssContent;
