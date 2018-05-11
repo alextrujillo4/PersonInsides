@@ -13,23 +13,10 @@ var name = 'Prueba2';
 var id_user = 'prueba@test.com';
 var valuesFromSelection = [];
 var id = 0;
+var querystring = require('querystring');
 
 function start(response, postData) {
 	console.log("Request handler 'start' was called.");
-	/*
-	var body = '<html>'+
-				'<head>'+
-				'<meta http-equiv="Content-Type" content="text/html; '+
-				'charset=UTF-8" />'+
-				'</head>'+
-				'<body>'+
-				'<form action="/upload" method="post">'+
-				'<textarea name="text" rows="20" cols="60"></textarea>'+
-				'<input type="submit" value="Submit text" />'+
-				'</form>'+
-				'</body>'+
-				'</html>';*/
-
 	response.writeHead(200, {"Content-Type": "text/html"});
 	fs.readFile('./public/login.html', null, function (error,data){
 
@@ -52,7 +39,9 @@ function start(response, postData) {
 function principal(response, postData) {
 	console.log("Request handler 'upload' was called.");
   //Get name and email from login (for execution of queries)
-  console.log(postData);
+  console.log("SSSSSSSSSSSSSSSSSSSSSSS");
+  name = querystring.parse(postData).text;
+  id_user = querystring.parse(postData).email;
 	fs.readFile('./public/index.html', null, function (error,data){
 
 		if (error){
@@ -186,7 +175,7 @@ function piService(response,postData){
               console.log('PERFIL CREADO');
 
               //Sacar el id
-              pool.query("SELECT id FROM profile WHERE id_User = '" + id_user + "' ORDER BY id desc LIMIT 1;",function(err,rows){
+              //pool.query("SELECT id FROM profile WHERE id_User = '" + id_user + "' ORDER BY id desc LIMIT 1;",function(err,rows){
                         var papasCreados = 0;
                         if(err) throw err;
                         valuesFromSelection = rows;
@@ -245,7 +234,7 @@ function piService(response,postData){
                         }
 
 
-                });
+                //});
       });
 
 
@@ -286,10 +275,13 @@ function piService(response,postData){
 
 
 function lastProfile(response,postData){
-
-	console.log("Request handler 'lastProfile' was called.");
-	fs.readFile('./savedProfile.json', null, function (error,data){
-
+  console.log("Request handler 'lastProfile' was called.");
+  //Query SELECT con name y id_user
+  fs.readFile('./savedProfile.json', null, function (error,data){ //MAL
+    pool.query("SELECT id FROM profile WHERE id_user='"+id_user+"' order by id desc LIMIT 1 ", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+      });
 		if (error){
 			response.writeHead(404);
 			response.write('File not found!');
@@ -301,7 +293,8 @@ function lastProfile(response,postData){
 			response.writeHead(200, {"Content-Type": "application/json"});
 			response.end(JSON.stringify(json));
 		}
-
+    response.writeHead(200, {"Content-Type": "application/json"});
+    response.end(JSON.stringify(json));
 
 	});
 
