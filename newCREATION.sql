@@ -23,3 +23,8 @@ CREATE TABLE Trait(
 	FOREIGN KEY (child_Of) references Trait(trait_id),
 	constraint PK_ALGO primary key (trait_id, profile_id)
 );
+CREATE TABLE User(
+	usr VARCHAR(255) NOT NULL UNIQUE,
+	pswd VARCHAR(255) NOT NULL,
+    CONSTRAINT PK_Usr PRIMARY KEY (usr)
+);
