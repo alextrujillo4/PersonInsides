@@ -9,8 +9,8 @@ var pool  = mysql.createPool({
  database        : 'test'
 });
 
-var name = 'Prueba2';
-var id_user = 'prueba@test.com';
+var name = 'Predefinido';
+var id_user = 'predefinido@test.com';
 var valuesFromSelection = [];
 var id = 0;
 var querystring = require('querystring');
@@ -37,25 +37,52 @@ function start(response, postData) {
 }
 
 function principal(response, postData) {
-	console.log("Request handler 'upload' was called.");
+	console.log("Request handler 'principal' was called.");
   //Get name and email from login (for execution of queries)
-  console.log("SSSSSSSSSSSSSSSSSSSSSSS");
   name = querystring.parse(postData).text;
   id_user = querystring.parse(postData).email;
-	fs.readFile('./public/index.html', null, function (error,data){
+  var nextPage = "";
+  pool.query("SELECT id FROM Profile WHERE id_user = '"+id_user+"' order by id desc LIMIT 1;",function(err,rows){
+            if(err) throw err;
+            //console.log(rows == NULL);
+            console.log(rows.length);
 
-		if (error){
-			console.log("No file found at location ... index");
-			response.writeHead(404);
-			response.write('File not found! index');
-		} else{
-			response.writeHead(200, {"Content-Type": "text/html"});
-			response.write(data);
-		}
+            if(rows.length == 0){
+              console.log("\nNO EXISTOOOO\n");
+              fs.readFile('./public/index2.html', null, function (error,data){
 
-		response.end();
+                if (error){
+                  console.log("No file found at location ... index2");
+                  response.writeHead(404);
+                  response.write('File not found! index2');
+                } else{
+                  response.writeHead(200, {"Content-Type": "text/html"});
+                  response.write(data);
+                }
 
-	});
+                response.end();
+
+              });
+            }
+            else{
+              console.log("\nSI EXISTOOOOO\n");
+              fs.readFile('./public/index.html', null, function (error,data){
+
+                if (error){
+                  console.log("No file found at location ... index");
+                  response.writeHead(404);
+                  response.write('File not found! index');
+                } else{
+                  response.writeHead(200, {"Content-Type": "text/html"});
+                  response.write(data);
+                }
+
+                response.end();
+
+              });
+            }
+    });
+
 }
 
 
@@ -175,10 +202,11 @@ function piService(response,postData){
               console.log('PERFIL CREADO');
 
               //Sacar el id
-              //pool.query("SELECT id FROM profile WHERE id_User = '" + id_user + "' ORDER BY id desc LIMIT 1;",function(err,rows){
+              pool.query("SELECT id FROM profile WHERE id_User = '" + id_user + "' ORDER BY id desc LIMIT 1;",function(err,rows){
                         var papasCreados = 0;
                         if(err) throw err;
                         valuesFromSelection = rows;
+                        console.log(valuesFromSelection[0].id);
                         id = valuesFromSelection[0].id;
 
                         for (var iA = 0; iA < 5; iA++) {
@@ -234,7 +262,7 @@ function piService(response,postData){
                         }
 
 
-                //});
+                });
       });
 
 
@@ -278,10 +306,10 @@ function lastProfile(response,postData){
   console.log("Request handler 'lastProfile' was called.");
   //Query SELECT con name y id_user
   fs.readFile('./savedProfile.json', null, function (error,data){ //MAL
-    pool.query("SELECT id FROM profile WHERE id_user='"+id_user+"' order by id desc LIMIT 1 ", function (err, result, fields) {
+    /*pool.query("SELECT id FROM profile WHERE id_user='"+id_user+"' order by id desc LIMIT 1 ", function (err, result, fields) {
         if (err) throw err;
         console.log(result);
-      });
+      });*/
 		if (error){
 			response.writeHead(404);
 			response.write('File not found!');
@@ -293,8 +321,8 @@ function lastProfile(response,postData){
 			response.writeHead(200, {"Content-Type": "application/json"});
 			response.end(JSON.stringify(json));
 		}
-    response.writeHead(200, {"Content-Type": "application/json"});
-    response.end(JSON.stringify(json));
+    //response.writeHead(200, {"Content-Type": "application/json"});
+    //response.end(JSON.stringify(json));
 
 	});
 
