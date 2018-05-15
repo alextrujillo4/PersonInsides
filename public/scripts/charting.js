@@ -173,6 +173,8 @@
 
     function getImportantText(big5Array) {
 
+      console.log ("Entro en la funcion GETIMPORTANTTEXT");
+      console.log (big5Array);
     	var top1;
     	var top2;
     	//0: (H,H) 1: (H,L) 2: (L,L) 3: (L,H)
@@ -223,13 +225,14 @@
     	}
 
 	//Regresa los 3 valores
-	return myArrF[top1][top2][pair];
+// return myArrF[top12][top1][pair];
+    return myArrF[top2][top1][pair];
 }
 
     $.ajax({
 
             url: "/LastProfile",
-            cache : false,
+            cache : true,
             type : "POST",
             crossDomain: true,
             dataType : "json",
@@ -238,7 +241,7 @@
                 console.log(errorMessage);
                 console.log(textStatus);
                 console.log(errorThrown);
-
+                console.log("EL AJAX RECIBIO ERROR");
                 var openness = 0;
                 var conscientiousness = 0;
                 var extraversion = 0;
@@ -249,7 +252,10 @@
             success: function(dataReceived){
 
                     //console.log("Data that was received from the server: " + dataReceived.personality[0].name);
-                    console.log("Data received from the server, but I wont show it to you. Just kidding: " );
+                    //console.log("Data received from the server, but I wont show it to you. Just kidding: " );
+                    //console.log("All data" + dataReceived.personality[10].percentile);
+
+
                     console.log("Data: " + dataReceived.personality[0].percentile);
                     console.log("Data: " + dataReceived.personality[1].percentile);
                     console.log("Data: " + dataReceived.personality[2].percentile);
@@ -262,7 +268,10 @@
                     var agreeableness = dataReceived.personality[3].percentile;
                     var emotionalRange = dataReceived.personality[4].percentile;
 
-                    $("#insightsDescription").html(getImportantText(dataReceived.personality));
+                    //$("#insightsDescription").html(getImportantText(dataReceived.personality));
+
+
+
                     //Grafica de big5
                     var myChart = new Chart(ctx, {
                         type: 'radar',

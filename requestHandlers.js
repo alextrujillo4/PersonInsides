@@ -9,29 +9,16 @@ var pool  = mysql.createPool({
  database        : 'test'
 });
 
-var name = 'Prueba2';
-var id_user = 'prueba@test.com';
+var name = 'Predefinido';
+var id_user = 'predefinido@test.com';
 var valuesFromSelection = [];
 var id = 0;
+var querystring = require('querystring');
 
 function start(response, postData) {
 	console.log("Request handler 'start' was called.");
-	/*
-	var body = '<html>'+
-				'<head>'+
-				'<meta http-equiv="Content-Type" content="text/html; '+
-				'charset=UTF-8" />'+
-				'</head>'+
-				'<body>'+
-				'<form action="/upload" method="post">'+
-				'<textarea name="text" rows="20" cols="60"></textarea>'+
-				'<input type="submit" value="Submit text" />'+
-				'</form>'+
-				'</body>'+
-				'</html>';*/
-
 	response.writeHead(200, {"Content-Type": "text/html"});
-	fs.readFile('./public/index.html', null, function (error,data){
+	fs.readFile('./public/login.html', null, function (error,data){
 
 		if (error){
 			response.writeHead(404);
@@ -48,6 +35,56 @@ function start(response, postData) {
 	//response.end();
 
 }
+
+function principal(response, postData) {
+	console.log("Request handler 'principal' was called.");
+  //Get name and email from login (for execution of queries)
+  name = querystring.parse(postData).text;
+  id_user = querystring.parse(postData).email;
+  var nextPage = "";
+  pool.query("SELECT id FROM Profile WHERE id_user = '"+id_user+"' order by id desc LIMIT 1;",function(err,rows){
+            if(err) throw err;
+            //console.log(rows == NULL);
+            console.log(rows.length);
+
+            if(rows.length == 0){
+              console.log("\nNO EXISTOOOO\n");
+              fs.readFile('./public/index2.html', null, function (error,data){
+
+                if (error){
+                  console.log("No file found at location ... index2");
+                  response.writeHead(404);
+                  response.write('File not found! index2');
+                } else{
+                  response.writeHead(200, {"Content-Type": "text/html"});
+                  response.write(data);
+                }
+
+                response.end();
+
+              });
+            }
+            else{
+              console.log("\nSI EXISTOOOOO\n");
+              fs.readFile('./public/index.html', null, function (error,data){
+
+                if (error){
+                  console.log("No file found at location ... index");
+                  response.writeHead(404);
+                  response.write('File not found! index');
+                } else{
+                  response.writeHead(200, {"Content-Type": "text/html"});
+                  response.write(data);
+                }
+
+                response.end();
+
+              });
+            }
+    });
+
+}
+
 
 function upload(response, postData) {
 	console.log("Request handler 'upload' was called.");
@@ -123,6 +160,7 @@ function piService(response,postData){
 	console.log("Request handler 'piService' was called.");
 	console.log("'piService' handler received: ");
 	// + postData);
+  console.log(querystring.parse(postData).textAreaContent);
 
 	var personality_insights = new PersonalityInsightsV3({
 	    username: 'ebc5e198-5f1b-4353-ae47-810792af98d0',
@@ -168,6 +206,7 @@ function piService(response,postData){
                         var papasCreados = 0;
                         if(err) throw err;
                         valuesFromSelection = rows;
+                        console.log(valuesFromSelection[0].id);
                         id = valuesFromSelection[0].id;
 
                         for (var iA = 0; iA < 5; iA++) {
@@ -264,10 +303,53 @@ function piService(response,postData){
 
 
 function lastProfile(response,postData){
+  console.log("Request handler 'lastProfile' was called.");
+  //Query SELECT con name y id_user
+  var arraySelects = [];
+  var currentID;
+  pool.query("SELECT id FROM profile WHERE id_user='"+id_user+"' order by id desc LIMIT 1 ", function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      arraySelects = result;
+      console.log(arraySelects[0].id);
+      currentID = arraySelects[0].id;
+      console.log(currentID);
+      pool.query("select percentile from trait t join profile p ON t.profile_id = p.id where t.name = 'Agreeableness' or t.name = 'openness' or t.name = 'conscientiousness' or t.name = 'extraversion' or t.name = 'emotionalRange' and p.id = '"+currentID+"';", function (err, result, fields) {
+          if (err) throw err;
+          console.log(result[0].percentile);
 
-	console.log("Request handler 'lastProfile' was called.");
-	fs.readFile('./savedProfile.json', null, function (error,data){
+          /*var json = JSON.parse(result);*/
+          /*console.log(JSON.stringify(json));*/ //da error
+          response.writeHead(200, {"Content-Type": "application/json"});
+    			//response.end(JSON.stringify(json));
 
+          var personalityArray = [];
+          for (var i = 0;i < result.length; i++) {
+              personalityArray.push({percentile: result[i].percentile});
+          }
+          //response.end(JSON.stringify(objs));
+
+
+          //No cheque si esto jala, posiblemente si
+          //var array = result[0];
+          var json = JSON.stringify({
+            personality: personalityArray
+          });
+          response.end(json);
+
+
+          //ESTO FUNCIONA
+          /*
+          var objs = [];
+          objs.push({percentile: result[0].percentile});
+          response.end(JSON.stringify(objs));*/
+
+        });
+    });
+
+
+
+  /*fs.readFile('./savedProfile.json', null, function (error,data){ //MAL
 		if (error){
 			response.writeHead(404);
 			response.write('File not found!');
@@ -279,16 +361,17 @@ function lastProfile(response,postData){
 			response.writeHead(200, {"Content-Type": "application/json"});
 			response.end(JSON.stringify(json));
 		}
+    //response.writeHead(200, {"Content-Type": "application/json"});
+    //response.end(JSON.stringify(json));
 
-
-	});
+	});*/
 
 
 
 }
 
 
-
+exports.principal = principal;
 exports.start = start;
 exports.upload = upload;
 exports.cssContent = cssContent;
