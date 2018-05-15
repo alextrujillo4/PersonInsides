@@ -339,12 +339,12 @@ console.log(top2);
                                 color: "#009688"
                             }, {
                                 id: 'B',
-                                name: 'Apertura al Cambio',
-                                color: "#2196F3"
-                            }, {
-                                id: 'C',
                                 name: 'Hedonismo',
                                 color: '#EC9800'
+                            }, {
+                                id: 'C',
+                                name: 'Apertura al Cambio',
+                                color: "#2196F3"
                             }, {
                                 id: 'D',
                                 name: 'Mejoramiento Autónomo',

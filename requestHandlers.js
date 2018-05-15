@@ -165,8 +165,6 @@ function jsContent(response,postData, pathname){
 		response.end();
 
 	});
-
-
 }
 
 function piService(response,postData){
@@ -194,19 +192,6 @@ function piService(response,postData){
 			console.log('Error:', error);
 			response.end();
 		} else{
-
-			 // Recibe la respuesta en la variable response en JSON
-		//	console.log(JSON.stringify(json, null, 2));
-			//var json = JSON.parse(response);
-			//response.setHeader("Content-Type", "text/json");
-        	//response.setHeader("Access-Control-Allow-Origin", "*");
-			//response.write(json);
-
-			//ESTO JALA
-			/*
-			response.writeHead(200, {"Content-Type": "application/json"});
-			response.end(JSON.stringify(json));*/
-
       //Create profile in database
       pool.query("INSERT INTO Profile (name,word_count,processed_Language,id_User,fecha) VALUES ('" + name + "','" + json.word_count + "','" + json.processed_language + "','" + id_user + "', NOW());",function(err,rows){
               if(err) throw err;
@@ -281,28 +266,7 @@ function piService(response,postData){
         }
         response.end();
       });
-
-      /*fs.writeFile('savedProfile.json', JSON.stringify(json, null, 2), function (err) {
-				  if (err)
-				  	throw err;
-				  else{
-				  	console.log('Saved!');
-				  	response.writeHead (200, {"Content-Type": "text/html"});
-					fs.readFile('./public/index.html', null, function (error,data){
-
-						if (error){
-							response.writeHead(404);
-							response.write('File not found!');
-						} else{
-							response.write(data);
-						}
-						response.end();
-					});
-
-				  }
-			});*/
 		}
-			//response.end();
 	} );
 }
 
@@ -314,59 +278,39 @@ function lastProfile(response,postData){
   var currentID;
   pool.query("SELECT id FROM profile WHERE id_user='"+id_user+"' order by id desc LIMIT 1 ", function (err, result) {
       if (err) throw err;
-      console.log(result);
       arraySelects = result;
-      console.log(arraySelects[0].id);
       currentID = arraySelects[0].id;
-      console.log(currentID);
       pool.query("select trait_id, percentile from trait t join profile p ON t.profile_id = p.id where (t.trait_id = 'big5_agreeableness' or t.trait_id = 'big5_openness' or t.trait_id = 'big5_conscientiousness' or t.trait_id = 'big5_extraversion' or t.trait_id = 'big5_neuroticism') and p.id = '"+currentID+"'order by t.trait_id ASC;", function (err, result, fields) {
           if (err) throw err;
-          console.log(result);
-
-          //var json = JSON.parse(result);
-          //console.log(JSON.stringify(json)); //da error
           response.writeHead(200, {"Content-Type": "application/json"});
-    			//response.end(JSON.stringify(json));
-
           var personalityArray = [];
           for (var i = 0;i < result.length; i++) {
               personalityArray.push({percentile: result[i].percentile});
           }
-          //response.end(JSON.stringify(objs));
 
+          pool.query("select trait_id, percentile from trait t join profile p ON t.profile_id = p.id where t.category='needs' and p.id = '"+currentID+"'order by t.trait_id ASC;", function (err, result, fields) {
+              if (err) throw err;
+              var needsArray = [];
+              for (var i = 0;i < result.length; i++) {
+                  needsArray.push({percentile: result[i].percentile});
+              }
+              pool.query("select trait_id, percentile from trait t join profile p ON t.profile_id = p.id where t.category='values' and p.id = '"+currentID+"'order by t.trait_id ASC;", function (err, result, fields) {
+                  if (err) throw err;
+                  var valuesArray = [];
+                  for (var i = 0;i < result.length; i++) {
+                      valuesArray.push({percentile: result[i].percentile});
+                  }
 
-          //No cheque si esto jala, posiblemente si
-          //var array = result[0];
-          var json = JSON.stringify({
-            personality: personalityArray
-          });
-          response.end(json);
-
-
-          //ESTO FUNCIONA
-          /*
-          var objs = [];
-          objs.push({percentile: result[0].percentile});
-          response.end(JSON.stringify(objs));*/
-
+                  var json = JSON.stringify({
+                    personality: personalityArray,
+                    needs: needsArray,
+                    values: valuesArray
+                  });
+                  response.end(json);
+                });
+            });
         });
     });
-
-  /*fs.readFile('./savedProfile.json', null, function (error,data){ //MAL
-		if (error){
-			response.writeHead(404);
-			response.write('File not found!');
-			response.end();
-		} else{
-			var json = JSON.parse(data);
-			console.log("About to send the contents of the file savedProfile.json");
-			//console.log(JSON.stringify(json));
-			response.writeHead(200, {"Content-Type": "application/json"});
-			response.end(JSON.stringify(json));
-		}
-    //response.writeHead(200, {"Content-Type": "application/json"});
-    //response.end(JSON.stringify(json));
-	});*/
 }
 
 
