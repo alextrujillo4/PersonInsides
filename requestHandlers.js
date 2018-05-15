@@ -160,7 +160,7 @@ function piService(response,postData){
 	console.log("Request handler 'piService' was called.");
 	console.log("'piService' handler received: ");
 	// + postData);
-  console.log(postData);
+  console.log(querystring.parse(postData).textAreaContent);
 
 	var personality_insights = new PersonalityInsightsV3({
 	    username: 'ebc5e198-5f1b-4353-ae47-810792af98d0',
@@ -305,11 +305,51 @@ function piService(response,postData){
 function lastProfile(response,postData){
   console.log("Request handler 'lastProfile' was called.");
   //Query SELECT con name y id_user
-  fs.readFile('./savedProfile.json', null, function (error,data){ //MAL
-    /*pool.query("SELECT id FROM profile WHERE id_user='"+id_user+"' order by id desc LIMIT 1 ", function (err, result, fields) {
-        if (err) throw err;
-        console.log(result);
-      });*/
+  var arraySelects = [];
+  var currentID;
+  pool.query("SELECT id FROM profile WHERE id_user='"+id_user+"' order by id desc LIMIT 1 ", function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      arraySelects = result;
+      console.log(arraySelects[0].id);
+      currentID = arraySelects[0].id;
+      console.log(currentID);
+      pool.query("select percentile from trait t join profile p ON t.profile_id = p.id where t.name = 'Agreeableness' or t.name = 'openness' or t.name = 'conscientiousness' or t.name = 'extraversion' or t.name = 'emotionalRange' and p.id = '"+currentID+"';", function (err, result, fields) {
+          if (err) throw err;
+          console.log(result[0].percentile);
+
+          /*var json = JSON.parse(result);*/
+          /*console.log(JSON.stringify(json));*/ //da error
+          response.writeHead(200, {"Content-Type": "application/json"});
+    			//response.end(JSON.stringify(json));
+
+          var personalityArray = [];
+          for (var i = 0;i < result.length; i++) {
+              personalityArray.push({percentile: result[i].percentile});
+          }
+          //response.end(JSON.stringify(objs));
+
+
+          //No cheque si esto jala, posiblemente si
+          //var array = result[0];
+          var json = JSON.stringify({
+            personality: personalityArray
+          });
+          response.end(json);
+
+
+          //ESTO FUNCIONA
+          /*
+          var objs = [];
+          objs.push({percentile: result[0].percentile});
+          response.end(JSON.stringify(objs));*/
+
+        });
+    });
+
+
+
+  /*fs.readFile('./savedProfile.json', null, function (error,data){ //MAL
 		if (error){
 			response.writeHead(404);
 			response.write('File not found!');
@@ -324,7 +364,7 @@ function lastProfile(response,postData){
     //response.writeHead(200, {"Content-Type": "application/json"});
     //response.end(JSON.stringify(json));
 
-	});
+	});*/
 
 
 
