@@ -31,9 +31,24 @@ function start(response, postData) {
 		response.end();
 
 	});
-	//response.write(body);
-	//response.end();
+}
 
+function info(response, postData) {
+	console.log("Request handler 'info' was called.");
+	response.writeHead(200, {"Content-Type": "text/html"});
+	fs.readFile('./public/info.html', null, function (error,data){
+
+		if (error){
+			response.writeHead(404);
+			response.write('File not found!');
+		} else{
+
+			response.write(data);
+		}
+
+		response.end();
+
+	});
 }
 
 function principal(response, postData) {
@@ -356,6 +371,7 @@ function lastProfile(response,postData){
 
 
 exports.principal = principal;
+exports.info = info;
 exports.start = start;
 exports.upload = upload;
 exports.cssContent = cssContent;
