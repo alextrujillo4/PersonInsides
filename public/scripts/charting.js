@@ -225,8 +225,7 @@
     	}
 
 	//Regresa los 3 valores
-// return myArrF[top12][top1][pair];
-    return myArrF[top2][top1][pair];
+    return myArrF[top1][top2][pair];
 }
 
     $.ajax({
@@ -262,13 +261,13 @@
                     console.log("Data: " + dataReceived.personality[3].percentile);
                     console.log("Data: " + dataReceived.personality[4].percentile);
 
-                    var openness = dataReceived.personality[0].percentile;
+                    var agreeableness = dataReceived.personality[0].percentile;
                     var conscientiousness = dataReceived.personality[1].percentile;
                     var extraversion = dataReceived.personality[2].percentile;
-                    var agreeableness = dataReceived.personality[3].percentile;
-                    var emotionalRange = dataReceived.personality[4].percentile;
+                    var emotionalRange = dataReceived.personality[3].percentile;
+                    var openness = dataReceived.personality[4].percentile;
 
-                    //$("#insightsDescription").html(getImportantText(dataReceived.personality));
+                    $("#insightsDescription").html(getImportantText(dataReceived.personality));
 
 
 
@@ -337,12 +336,12 @@
                                 color: "#009688"
                             }, {
                                 id: 'B',
-                                name: 'Apertura al Cambio',
-                                color: "#2196F3"
-                            }, {
-                                id: 'C',
                                 name: 'Hedonismo',
                                 color: '#EC9800'
+                            }, {
+                                id: 'C',
+                                name: 'Apertura al Cambio',
+                                color: "#2196F3"
                             }, {
                                 id: 'D',
                                 name: 'Mejoramiento Autónomo',
@@ -353,23 +352,23 @@
                                 color: '#8BC34A'
                             }, {
                                 parent: 'A',
-                                name: dataReceived.values[0].percentile*100 + "<h1>%</h1>",
+                                name: Math.round(dataReceived.values[0].percentile*100) + "<h1>%</h1>",
                                 value: dataReceived.values[0].percentile*100
                             }, {
                                 parent: 'B',
-                                name: dataReceived.values[1].percentile*100 + "<h1>%</h1>",
+                                name: Math.round(dataReceived.values[1].percentile*100) + "<h1>%</h1>",
                                 value: dataReceived.values[1].percentile*100
                             }, {
                                 parent: 'C',
-                                name: dataReceived.values[2].percentile*100 + "<h1>%</h1>",
+                                name: Math.round(dataReceived.values[2].percentile*100) + "<h1>%</h1>",
                                 value: dataReceived.values[2].percentile*100
                             }, {
                                 parent: 'D',
-                                name: dataReceived.values[3].percentile*100 + "<h1>%</h1>",
+                                name: Math.round(dataReceived.values[3].percentile*100) + "<h1>%</h1>",
                                 value: dataReceived.values[3].percentile*100
                             }, {
                                 parent: 'E',
-                                name: dataReceived.values[4].percentile*100 + "<h1>%</h1>",
+                                name: Math.round(dataReceived.values[4].percentile*100) + "<h1>%</h1>",
                                 value: dataReceived.values[4].percentile*100
                             }]
                         }],
@@ -439,17 +438,17 @@
 
                       series: [{
                         data: [
-                          { x: 0, y: 0, z: dataReceived.needs[0].percentile*100, name: 'Retos', country: 'Retos', color: '#FF5722' },
-                          { x: 5, y: 5, z: dataReceived.needs[1].percentile*100, name: 'Reservarse', country: 'Reservarse', color: '#FF9800'},
-                          { x: 10, y: 10, z: dataReceived.needs[2].percentile*100, name: 'Curiosidad', country: 'Curiosidad', color: '#E91E63'},
-                          { x: 15, y: 15, z: dataReceived.needs[3].percentile*100, name: 'Emoción', country: 'Emoción', color: '#FFEB3B'},
-                          { x: 20, y: 20, z: dataReceived.needs[4].percentile*100, name: 'Armonía', country: 'Armonía', color: '#673AB7'},
-                          { x: 25, y: 25, z: dataReceived.needs[5].percentile*100, name: 'Ideales', country: 'Ideales', color: '#8BC34A'},
-                          { x: 30, y: 30, z: dataReceived.needs[6].percentile*100, name: 'Libertad', country: 'Libertad', color: '#4CAF50'},
-                          { x: 35, y: 35, z: dataReceived.needs[7].percentile*100, name: 'Amor', country: 'Amor', color: '#009688'},
-                          { x: 40, y: 40, z: dataReceived.needs[8].percentile*100, name: 'Práctico', country: 'Práctico', color: '#00BCD4'},
-                          { x: 45, y: 45, z: dataReceived.needs[9].percentile*100, name: 'Expresivo', country: 'Expresivo', color: '#9C27B0'},
-                          { x: 50, y: 50, z: dataReceived.needs[10].percentile*100, name: 'Estabilidad', country: 'Estabilidad', color: '#2196F3'},
+                          { x: 0, y: 0, z: Math.round(dataReceived.needs[0].percentile*100), name: 'Retos', country: 'Retos', color: '#FF5722' },
+                          { x: 5, y: 5, z: Math.round(dataReceived.needs[1].percentile*100), name: 'Reservarse', country: 'Reservarse', color: '#FF9800'},
+                          { x: 10, y: 10, z: Math.round(dataReceived.needs[2].percentile*100), name: 'Curiosidad', country: 'Curiosidad', color: '#E91E63'},
+                          { x: 15, y: 15, z: Math.round(dataReceived.needs[3].percentile*100), name: 'Emoción', country: 'Emoción', color: '#FFEB3B'},
+                          { x: 20, y: 20, z: Math.round(dataReceived.needs[4].percentile*100), name: 'Armonía', country: 'Armonía', color: '#673AB7'},
+                          { x: 25, y: 25, z: Math.round(dataReceived.needs[5].percentile*100), name: 'Ideales', country: 'Ideales', color: '#8BC34A'},
+                          { x: 30, y: 30, z: Math.round(dataReceived.needs[6].percentile*100), name: 'Libertad', country: 'Libertad', color: '#4CAF50'},
+                          { x: 35, y: 35, z: Math.round(dataReceived.needs[7].percentile*100), name: 'Amor', country: 'Amor', color: '#009688'},
+                          { x: 40, y: 40, z: Math.round(dataReceived.needs[8].percentile*100), name: 'Práctico', country: 'Práctico', color: '#00BCD4'},
+                          { x: 45, y: 45, z: Math.round(dataReceived.needs[9].percentile*100), name: 'Expresivo', country: 'Expresivo', color: '#9C27B0'},
+                          { x: 50, y: 50, z: Math.round(dataReceived.needs[10].percentile*100), name: 'Estabilidad', country: 'Estabilidad', color: '#2196F3'},
                           { x: 55, y: 55, z: dataReceived.needs[11].percentile*100, name: 'Estructura', country: 'Estructura', color: '#3F51B5'},
                         ]
                       }]
