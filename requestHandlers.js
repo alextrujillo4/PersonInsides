@@ -155,11 +155,8 @@ function jsContent(response,postData, pathname){
 }
 
 function piService(response,postData){
-
-
 	console.log("Request handler 'piService' was called.");
 	console.log("'piService' handler received: ");
-	// + postData);
   console.log(querystring.parse(postData).textAreaContent);
 
 	var personality_insights = new PersonalityInsightsV3({
@@ -168,11 +165,10 @@ function piService(response,postData){
 	    version_date: '2017-10-13'
 	});
 
-
 	var params = {
 		  // Get the content from the text file.
 		  // Content: el texto a analizar
-		  content: postData,
+		  content: querystring.parse(postData).textAreaContent,
 		  // Content-type: el tipo de archivo a analizar, en este caso plain text
 		  content_type: 'text/plain;charset=utf-8'
     };
@@ -206,29 +202,26 @@ function piService(response,postData){
                         var papasCreados = 0;
                         if(err) throw err;
                         valuesFromSelection = rows;
-                        console.log(valuesFromSelection[0].id);
+                        //console.log(valuesFromSelection[0].id); //Imprime id
                         id = valuesFromSelection[0].id;
-
+                        //Insertar los 5 big_5
                         for (var iA = 0; iA < 5; iA++) {
                           pool.query("INSERT INTO Trait (trait_id,name,percentile,category,profile_id, child_Of) VALUES ('" + json.personality[iA].trait_id + "','" +  json.personality[iA].name + "','" + json.personality[iA].percentile + "','" +  json.personality[iA].category+ "'," + id + ", NULL);",function(err,rows){
                     		          if(err) throw err;
                     		          console.log("Big Five Creado");
-                                  papasCreados++;
+                                  papasCreados++; //papa = 1 big_5
                                   console.log(papasCreados);
-                                  //Insert children of each big_5
-
+                                  //Inserta los hijos de cada big_5, una vez que estos 5 ya fueron creados
                                   if(papasCreados>=5){
                                     console.log("YA VOY A CREAR LOS HIJOS");
                                       for(iA = 0; iA<5; iA++){
                                       for (var iB = 0; iB < json.personality[iA].children.length; iB++) {
-                                        console.log(json.personality[iA].name+"\n");
-
-                                      console.log( json.personality[iA].children[iB].trait_id );
-                                      console.log( json.personality[iA].children[iB].name);
-                                      console.log( json.personality[iA].children[iB].percentile);
-                                      console.log( json.personality[iA].children[iB].category);
-                                      console.log(id);
-                                      console.log( json.personality[iA].trait_id);
+                                        console.log("\n"+json.personality[iA].name+"\n");
+                                        console.log( json.personality[iA].children[iB].trait_id );
+                                        console.log( json.personality[iA].children[iB].name);
+                                        console.log( json.personality[iA].children[iB].percentile);
+                                        console.log( json.personality[iA].children[iB].category);
+                                        console.log( json.personality[iA].trait_id);
 
                                       pool.query("INSERT INTO Trait (trait_id,name,percentile,category,profile_id, child_Of) VALUES ('" + json.personality[iA].children[iB].trait_id
                                       + "','" +  json.personality[iA].children[iB].name + "','" + json.personality[iA].children[iB].percentile + "','" +  json.personality[iA].children[iB].category
@@ -241,7 +234,7 @@ function piService(response,postData){
                                 }
                     		  });
                         }
-
+                        //Save needs in database
                         for (var iC = 0; iC < json.needs.length; iC++) {
                           pool.query("INSERT INTO Trait (trait_id,name,percentile,category,profile_id, child_Of) VALUES ('" + json.needs[iC].trait_id
                           + "','" +  json.needs[iC].name + "','" + json.needs[iC].percentile + "','" +  json.needs[iC].category
@@ -251,7 +244,7 @@ function piService(response,postData){
                             });
                         }
 
-
+                        //Save values in database
                         for (var iD = 0; iD < json.values.length; iD++) {
                           pool.query("INSERT INTO Trait (trait_id,name,percentile,category,profile_id, child_Of) VALUES ('" + json.values[iD].trait_id
                           + "','" +  json.values[iD].name + "','" + json.values[iD].percentile + "','" +  json.values[iD].category
@@ -260,15 +253,21 @@ function piService(response,postData){
                                     console.log('VALUE Created');
                             });
                         }
-
-
                 });
       });
 
+      fs.readFile('./public/index.html', null, function (error,data){
 
+        if (error){
+          response.writeHead(404);
+          response.write('File not found!');
+        } else{
+          response.write(data);
+        }
+        response.end();
+      });
 
-
-			fs.writeFile('savedProfile.json', JSON.stringify(json, null, 2), function (err) {
+      /*fs.writeFile('savedProfile.json', JSON.stringify(json, null, 2), function (err) {
 				  if (err)
 				  	throw err;
 				  else{
@@ -280,25 +279,16 @@ function piService(response,postData){
 							response.writeHead(404);
 							response.write('File not found!');
 						} else{
-
 							response.write(data);
 						}
-
 						response.end();
-
 					});
 
 				  }
-			});
-
-
-
+			});*/
 		}
 			//response.end();
-
 	} );
-
-
 }
 
 
@@ -314,12 +304,12 @@ function lastProfile(response,postData){
       console.log(arraySelects[0].id);
       currentID = arraySelects[0].id;
       console.log(currentID);
-      pool.query("select percentile from trait t join profile p ON t.profile_id = p.id where t.name = 'Agreeableness' or t.name = 'openness' or t.name = 'conscientiousness' or t.name = 'extraversion' or t.name = 'emotionalRange' and p.id = '"+currentID+"';", function (err, result, fields) {
+      pool.query("select trait_id, percentile from trait t join profile p ON t.profile_id = p.id where (t.trait_id = 'big5_agreeableness' or t.trait_id = 'big5_openness' or t.trait_id = 'big5_conscientiousness' or t.trait_id = 'big5_extraversion' or t.trait_id = 'big5_neuroticism') and p.id = '"+currentID+"'order by t.trait_id ASC;", function (err, result, fields) {
           if (err) throw err;
-          console.log(result[0].percentile);
+          console.log(result);
 
-          /*var json = JSON.parse(result);*/
-          /*console.log(JSON.stringify(json));*/ //da error
+          //var json = JSON.parse(result);
+          //console.log(JSON.stringify(json)); //da error
           response.writeHead(200, {"Content-Type": "application/json"});
     			//response.end(JSON.stringify(json));
 
@@ -347,8 +337,6 @@ function lastProfile(response,postData){
         });
     });
 
-
-
   /*fs.readFile('./savedProfile.json', null, function (error,data){ //MAL
 		if (error){
 			response.writeHead(404);
@@ -363,11 +351,7 @@ function lastProfile(response,postData){
 		}
     //response.writeHead(200, {"Content-Type": "application/json"});
     //response.end(JSON.stringify(json));
-
 	});*/
-
-
-
 }
 
 
