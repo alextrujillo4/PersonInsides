@@ -6,6 +6,7 @@
     var extraversion;
     var agreeableness;
     var emotionalRange;
+
     var myArrF = [
     [ // Cordialidad/Amabilidad //
         [ // Cordialidad/Amabilidad //
@@ -173,12 +174,12 @@
     function getImportantText(big5Array) {
 
       console.log ("Entro en la funcion GETIMPORTANTTEXT");
-
+      console.log (big5Array);
     	var top1;
     	var top2;
     	//0: (H,H) 1: (H,L) 2: (L,L) 3: (L,H)
     	var pair;
-    	var arrHiLo = [];
+    	var arrHiLo = [0,0];
 
     	// llena un arreglo para ver si cada valor es alto o bajo
     	for (var i = 0; i < big5Array.length; i++) {
@@ -211,11 +212,7 @@
     		top2 = i;
           }
         }
-console.log(arrHiLo);
-console.log(high1);
-console.log(high2);
-console.log(top1);
-console.log(top2);
+
     	//Define las posiciones de la matriz 3D
     	if (arrHiLo[top1] == 1 && arrHiLo[top2] == 1){
     		pair = 0;
@@ -228,7 +225,8 @@ console.log(top2);
     	}
 
 	//Regresa los 3 valores
-    return myArrF[top1][top2][pair];
+// return myArrF[top12][top1][pair];
+    return myArrF[top2][top1][pair];
 }
 
     $.ajax({
@@ -264,13 +262,13 @@ console.log(top2);
                     console.log("Data: " + dataReceived.personality[3].percentile);
                     console.log("Data: " + dataReceived.personality[4].percentile);
 
-                    var agreeableness = dataReceived.personality[0].percentile;
+                    var openness = dataReceived.personality[0].percentile;
                     var conscientiousness = dataReceived.personality[1].percentile;
                     var extraversion = dataReceived.personality[2].percentile;
-                    var emotionalRange = dataReceived.personality[3].percentile;
-                    var openness = dataReceived.personality[4].percentile;
+                    var agreeableness = dataReceived.personality[3].percentile;
+                    var emotionalRange = dataReceived.personality[4].percentile;
 
-                    $("#insightsDescription").html(getImportantText(dataReceived.personality));
+                    //$("#insightsDescription").html(getImportantText(dataReceived.personality));
 
 
 
@@ -339,12 +337,12 @@ console.log(top2);
                                 color: "#009688"
                             }, {
                                 id: 'B',
-                                name: 'Hedonismo',
-                                color: '#EC9800'
-                            }, {
-                                id: 'C',
                                 name: 'Apertura al Cambio',
                                 color: "#2196F3"
+                            }, {
+                                id: 'C',
+                                name: 'Hedonismo',
+                                color: '#EC9800'
                             }, {
                                 id: 'D',
                                 name: 'Mejoramiento Autónomo',

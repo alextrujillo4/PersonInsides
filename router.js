@@ -15,7 +15,10 @@ function route(handle, pathname, response, postData) {
 
 		handle["/js"](response,postData, pathname);
 
-	} else{
+	} else if (/^\/[a-zA-Z0-9\/\.\_\-]*.png$/.test(pathname.toString())){
+			handle["/png"](response,postData, pathname);
+	}
+	else{
 
 		console.log("No request handler found for " + pathname);
 		response.writeHead(404, {"Content-Type": "text/plain"});

@@ -160,12 +160,35 @@ function jsContent(response,postData, pathname){
 		} else{
 			response.writeHead(200, {"Content-Type": "text/javascript"});
 			response.write(data);
+
 		}
 
 		response.end();
 
 	});
 }
+
+function pngContent(response,postData, pathname){
+	console.log("Request handler 'pngContent' was called. The file " + pathname + " was requested.");
+
+	var fullpath = './public' + pathname;
+
+	fs.readFile(fullpath, null, function (error,data){
+
+		if (error){
+			console.log("No file found at:" + fullpath);
+			response.writeHead(404);
+			response.write('File not found!');
+		} else{
+			response.writeHead(200, {"Content-Type": "image/png"});
+			response.write(data);
+		}
+
+		response.end();
+
+	});
+}
+
 
 function piService(response,postData){
 	console.log("Request handler 'piService' was called.");
@@ -320,5 +343,6 @@ exports.start = start;
 exports.upload = upload;
 exports.cssContent = cssContent;
 exports.jsContent = jsContent;
+exports.pngContent = pngContent;
 exports.piService = piService;
 exports.lastProfile = lastProfile;

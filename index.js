@@ -10,6 +10,7 @@ handle["/principal"] = requestHandlers.principal;
 handle["/upload"] = requestHandlers.upload;
 handle["/css"] = requestHandlers.cssContent;
 handle["/js"]= requestHandlers.jsContent;
+handle["/png"]= requestHandlers.pngContent;
 handle["/PIService"] = requestHandlers.piService;
 handle["/LastProfile"] = requestHandlers.lastProfile;
 
