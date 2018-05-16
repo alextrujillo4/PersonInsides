@@ -420,11 +420,11 @@
 }
 
 .deep-purple {
-  background-color: #b25674 !important;
+  background-color: #673ab7 !important;
 }
 
 .deep-purple-text {
-  color: #b25674 !important;
+  color: #673ab7 !important;
 }
 
 .deep-purple.lighten-5 {
@@ -468,11 +468,11 @@
 }
 
 .deep-purple.darken-1 {
-  background-color: #b25674 !important;
+  background-color: #5e35b1 !important;
 }
 
 .deep-purple-text.text-darken-1 {
-  color: #b25674 !important;
+  color: #5e35b1 !important;
 }
 
 .deep-purple.darken-2 {

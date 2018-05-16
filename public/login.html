@@ -1,9 +1,13 @@
 <html>
 
 <head>
+  <link rel="icon"  href="img/favicon.png" sizes="any" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <!--<script src="js/login_index.js"></script>-->
 
   <style>
@@ -38,12 +42,14 @@
   <div class="section"></div>
   <main>
     <center>
-
-      <h5 class="indigo-text">Ingresa tus datos para iniciar el análisis</h5>
+      <img src="img/favicon.png" height="60" width="60">
+      <h5 class="purple-text">Ingresa tus datos para iniciar</h5>
       <div class="section"></div>
 
       <div class="container">
+
         <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
           <form action="/principal" class="col s12" method="post">
 
           <div class='row'>
@@ -66,7 +72,7 @@
             <center>
               <div   class='row'>
                 <!-- <button href="/index.html" type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo' onclick="login();"><a style="color:#fff;"href="index.html">CONSULTAR</a></button> -->
-                  <input type= "submit" class="waves-effect waves-light indigo accent-4 btn" value="Analizar">
+                  <input type= "submit" class="deep-purple darken-1 btn" value="Analizar">
               </div>
             </center>
           </form>
