@@ -30,6 +30,7 @@
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
+
 <body>
 
     <nav class="nav-extended purple darken-4">
@@ -46,8 +47,25 @@
       <br><br>
       <h1 class="header center blue-grey-text text-lighten-4">Análisis de personalidad</h1>
       <div class="row card">
+        <script>
+            function checkform(evt)    {
+                var myForm = document.escrito;
+                var condition = true;
+                if(myForm.textAreaContent.value.length < 3500){
+
+                    alert("Es necesario que sean al menos 3500 caracteres");
+                    condition = false;
+                }
+                if(!condition) {
+                    if(evt.preventDefault) { event.preventDefault(); }
+                    else if(evt.returnValue) { evt.returnValue = false; }
+                    else { return false; }
+                }
+            }
+        </script>
         <!--START BUTTON  This sends all content data to Personality Insights-->
-      <form action="/PIService" method="post" class="col s8  white">
+        <!--<form action="/PIService" method="post" class="col s8  white">-->
+      <form action="/PIService" method="post" class="col s8  white" name="escrito" onsubmit="checkform(event)">
         <div class="row" style="padding:40px;">
           <div class="input-field card-content col s12">
             <textarea id="textarea2" name = "textAreaContent" class="materialize-textarea" data-length="1000"></textarea>
@@ -58,7 +76,8 @@
 <!--
         <a href="#" class="deep-purple-text text-darken-1">Subir desde computadora</a>
 -->
-      <input type= "submit" class="deep-purple darken-1 btn" value="Analizar">
+      <!-- Si son menos de 500 palabras, no deja dar click -->
+      <input type="submit" class="deep-purple darken-1 btn" value="Analizar">
       </div>
       </form>
       <!--END BUTTON PI-->
@@ -87,7 +106,7 @@
       <div class="row">
         <div class="col l6 s12">
           <h5 class="white-text">Información</h5>
-          <p class="grey-text text-lighten-4">Tipos de escritos que puedes analizar: Reflexión personal, Ensayo académico, Ensayo de Admisión, Carta de exposición de motivos, Cuenta de Twitter,Texto extraído de un blog, Propósito de vida.</p>
+          <p class="grey-text text-lighten-4">No se aceptan menos de 800 palabras, ideal 1500. Tipos de escritos que puedes analizar: Reflexión personal, Ensayo académico, Ensayo de Admisión, Carta de exposición de motivos, Cuenta de Twitter,Texto extraído de un blog, Propósito de vida.</p>
         </div>
 
       </div>

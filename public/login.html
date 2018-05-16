@@ -38,6 +38,8 @@
   </style>
 </head>
 
+
+
 <body>
   <div class="section"></div>
   <main>
@@ -49,8 +51,27 @@
       <div class="container">
 
         <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
-
-          <form action="/principal" class="col s12" method="post">
+          <script>
+              function checkform(evt)    {
+                  var myForm = document.login;
+                  var condition = true;
+                  if(myForm.text.value==""){
+                      alert("Ingresa un nombre");
+                      myForm.text.focus();
+                      condition = false;
+                  }
+                  if (myForm.email.value==""){
+                      alert("Ingresa un email");
+                      condition = false;
+                  }
+                  if(!condition) {
+                      if(evt.preventDefault) { event.preventDefault(); }
+                      else if(evt.returnValue) { evt.returnValue = false; }
+                      else { return false; }
+                  }
+              }
+          </script>
+          <form action="/principal" class="col s12" method="post" name="login" onsubmit="checkform(event)">
 
           <div class='row'>
             <div class='input-field col s12'>
