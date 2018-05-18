@@ -2,18 +2,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon"  href="img/favicon.png" sizes="any" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Personal Insights</title>
+  <title>Personality Insights</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Personal Insights</title>
 
   <!-- CSS  -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,30 +19,30 @@
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <body>
 
-    <nav class="nav-extended grey darken-4">
-      <div class="nav-wrapper">
-        <a href="#!" class="brand-logo"style="margin-left:8px">Logo</a>
-        <ul class="right hide-on-med-and-down">
-          <li style="margin:0.8em" ><a href="login.html">Log Out</a></li>
-        </ul>
-      </div>
-      <div class="nav-content">
-        <span class="nav-title"style="margin-left:8px">Personalidad del Estudiante</span>
-        <a  href="login.html" class="btn-floating btn-large halfway-fab waves-effect waves-light teal">
-          <i class="material-icons">exit_to_app</i>
-        </a>
-      </div>
-    </nav>
+<nav class="nav-extended purple darken-4">
+    <div class="nav-wrapper">
+      <img src="img/in.png" class="img-fluid pull-xs-left" style="margin-top:8px; margin-bottom:8px; margin-left:32px; height:40px">
+      <ul class="right hide-on-med-and-down">
+        <li><a style="font-size:16px"; href="/info"><i class="material-icons left">info_outline</i>Más información</a></li>
+        <li><a href="/start"><i class="material-icons left">exit_to_app</i></a></li>
+      </ul>
+    </div>
+  </nav>
 
 
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">
         <br><br>
-        <h1 class="header center blue-grey-text text-lighten-4" >Personality Insights</h1>
-        <div class="row">
-
+        <h1 class="header center black-text text-black" style="font-size: 30px">Análisis de personalidad con inteligencia artificial</h1>
+        <h4 class="center blue-grey-text text-lighten-4" style="font-size: 30px">Apoyado con el servicio de IBM Watson Personality insight</h4>
+        <div class="row" style="padding-top:3.2em">
             <div class="col s12 m6" >
                 <h4 class="header">Descripción</h4>
                 <div class="row">
@@ -54,9 +51,9 @@
                   </div>
 
                 </div>
-                <div style="width:20em;">
-                    <a href="/upload" class="waves-effect waves-light indigo accent-4 btn"><i class="material-icons right">cloud_upload</i>Subir de nuevo</a>
-                    <a href="#" class="waves-effect waves-light  blue accent-3 btn" style="margin-top:0.8em;">Análisis por Twitter<i class="fa fa-twitter" style="font-size:24px;color:white; padding-left:0.8em"></i></a>
+                <div style="width:24em;">
+                    <a href="/upload" style="margin-bottom:16px; font-size:14px;"class="waves-effect waves-light purple darken-4 btn">Subir de nuevo<i class="material-icons right">cloud_upload</i></a>
+                    <a href="#" style="font-size:14px;"class=" blue accent-3 btn ">Análisis por Twitter<i style="padding-left:0.8em"class="fa fa-twitter"></i></a>
 
                 </div>
             </div>
@@ -66,25 +63,6 @@
                 <canvas id="myChart" height="260"></canvas>
               </div>
             </div>
-<!-- ESTA SECCION NO DESPLIEGA NADA
-            <div class="col s12 m12 l6">
-              <div class="sample-chart-wrapper">
-                <canvas id="myChart_2" height="260"></canvas>
-              </div>
-            </div>
-
-            <div class="col s12 m12 l6">
-              <div class="sample-chart-wrapper">
-                <canvas id="myChart_3" height="260"></canvas>
-              </div>
-            </div>
-
-            <div class="col s12 m12 l6">
-              <div class="sample-chart-wrapper">
-                <canvas id="myChart_4" height="260"></canvas>
-              </div>
-            </div>
--->
         </div>
 
 
@@ -114,39 +92,17 @@
     <br><br>
   </div>
 
-  <footer class="page-footer  grey lighten-1">
-    <div class="container">
-      <div class="row">
-        <div class="col l6 s12">
-          <h5 class="white-text">Información</h5>
-          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-
-
-        </div>
-
-        <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="footer-copyright" >
+  <footer class="page-footer  purple darken-4">
+    <div class="footer-copyright">
       <div class="container" >
-      Made by <a class="black-text text-lighten-3" href="#">CIE Developers</a>
+      Hecho por CIE Developers
       </div>
-      <img src="img/tedu-logo.png" style="height:2.5em; width: auto; padding-right:0.5em;"alt="">
-      <img src="img/cie-logo-3.png" style="height:2.5em; width: auto; padding-right:1em;"alt="">
+      <img href="" src="img/in.png" style="height:2em; width: auto; padding-right:0.8em;"alt="">
+      <a href="http://tedu.itesm.mx/" target="_blank"><img src="img/tedu-logo.png" style="height:2.5em; width: auto; padding-right:0.5em;"alt=""></a>
+      <a href="http://tedu.itesm.mx/inteligencia/" target="_blank"><img  src="img/cie-logo-3.png" style="height:2.5em; width: auto; padding-right:1em;"alt=""></a>
     </div>
   </footer>
 
-  <!-- ================================================
-  Scripts
-  ================================================ -->
 
   <!-- jQuery Library -->
   <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>

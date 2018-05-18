@@ -5,10 +5,13 @@ var requestHandlers = require("./requestHandlers");
 var handle = {}
 handle["/"] = requestHandlers.start;
 handle["/start"] = requestHandlers.start;
+handle["/info"] = requestHandlers.info;
 handle["/principal"] = requestHandlers.principal;
 handle["/upload"] = requestHandlers.upload;
 handle["/css"] = requestHandlers.cssContent;
 handle["/js"]= requestHandlers.jsContent;
+handle["/png"]= requestHandlers.pngContent;
+handle["/pdf"]= requestHandlers.pdfService;
 handle["/PIService"] = requestHandlers.piService;
 handle["/LastProfile"] = requestHandlers.lastProfile;
 

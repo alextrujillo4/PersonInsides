@@ -1,10 +1,11 @@
-<!-- NO ES ->
+<!-- NO ES -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon"  href="img/favicon.png" sizes="any" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Personal Insides</title>
+  <title>Personality Insights</title>
       <meta name = "viewport" content = "width = device-width, initial-scale = 1">
       <link rel = "stylesheet"
          href = "https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -29,42 +30,54 @@
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
+
 <body>
 
-
-        <nav class="nav-wrapper grey darken-4">
-           <div >
-             <a href="#!" class="brand-logo">Logo</a>
-             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-             <ul class="right hide-on-med-and-down">
-                 <li  ><a href="/index.html">Menú principal</a></li>
-             </ul>
-           </div>
-         </nav>
-
-         <ul class="sidenav" id="mobile-demo">
-           <li><a href="sass.html">Sass</a></li>
-           <li><a href="badges.html">Components</a></li>
-           <li><a href="collapsible.html">Javascript</a></li>
-           <li><a href="mobile.html">Mobile</a></li>
-         </ul>
+    <nav class="nav-extended purple darken-4">
+    <div class="nav-wrapper">
+      <img src="img/in.png" class="img-fluid pull-xs-left" style="margin-top:24px; margin-left:32px; height:40px">
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/principal"><i class="material-icons left">home</i>Regresar al menú principal</a></li>
+      </ul>
+    </div>
+  </nav>
 
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">
       <br><br>
-      <h1 class="header center blue-grey-text text-lighten-4">Personalidad del Estudiante</h1>
+      <h1 class="header center blue-grey-text text-lighten-4">Análisis de personalidad</h1>
       <div class="row card">
+        <script>
+            function checkform(evt)    {
+                var myForm = document.escrito;
+                var condition = true;
+                if(myForm.textAreaContent.value.length < 3500){
+
+                    alert("Es necesario que sean al menos 3500 caracteres");
+                    condition = false;
+                }
+                if(!condition) {
+                    if(evt.preventDefault) { event.preventDefault(); }
+                    else if(evt.returnValue) { evt.returnValue = false; }
+                    else { return false; }
+                }
+            }
+        </script>
         <!--START BUTTON  This sends all content data to Personality Insights-->
-      <form action="/PIService" method="post" class="col s8  white">
-        <div class="row" style="padding:40px">
+        <!--<form action="/PIService" method="post" class="col s8  white">-->
+      <form action="/PIService" method="post" class="col s8  white" name="escrito" onsubmit="checkform(event)">
+        <div class="row" style="padding:40px;">
           <div class="input-field card-content col s12">
-            <textarea id="textarea2" name = "textAreaContent"            class="materialize-textarea" data-length="800"></textarea>
+            <textarea id="textarea2" name = "textAreaContent" class="materialize-textarea" data-length="1000"></textarea>
             <label for="textarea2">Escribe aquí</label>
           </div>
         </div>
         <div class="card-action">
-        <a href="#" style="color:#304FFE">Subir desde computadora</a>
-      <input type= "submit" class="waves-effect waves-light indigo accent-4 btn" value="Analizar">
+<!--
+        <a href="#" class="deep-purple-text text-darken-1">Subir desde computadora</a>
+-->
+      <!-- Si son menos de 500 palabras, no deja dar click -->
+      <input type="submit" class="deep-purple darken-1 btn" value="Analizar">
       </div>
       </form>
       <!--END BUTTON PI-->
@@ -77,7 +90,7 @@
       <br>
     </div>
   </div>
-  
+
 
 
   <div class="container">
@@ -88,28 +101,19 @@
     <br><br>
   </div>
 
-  <footer class="page-footer  grey lighten-1">
+  <footer class="page-footer  purple darken-4">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
           <h5 class="white-text">Información</h5>
-          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+          <p class="grey-text text-lighten-4">No se aceptan menos de 800 palabras, ideal 1500. Tipos de escritos que puedes analizar: Reflexión personal, Ensayo académico, Ensayo de Admisión, Carta de exposición de motivos, Cuenta de Twitter,Texto extraído de un blog, Propósito de vida.</p>
         </div>
 
-        <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
       </div>
     </div>
     <div class="footer-copyright">
       <div class="container">
-      Made by <a class="orange-text text-lighten-3" href="#">Mostla Developers</a>
+      Hecho por CIE Developers
       </div>
     </div>
   </footer>
@@ -118,7 +122,6 @@
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
-
   <script src="js/init.js"></script>
 
   </body>
