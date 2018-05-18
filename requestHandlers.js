@@ -190,15 +190,24 @@ function pngContent(response,postData, pathname){
 }
 
 function pdfService(response,postData, pathname){
-  console.log("Request handler 'pdfService' was called. The file " + querystring.parse(postData).pdfNombre + " was requested.");
+  //console.log("Request handler 'pdfService' was called. The file " + querystring.parse(postData).pdfNombre + " was requested.");
+  console.log("Request handler 'pdfService' was called. The file " + pathname + " was requested.");
  
-  var fullpath = './documents/' +  querystring.parse(postData).pdfNombre;
+  //var nombrePDF =  querystring.parse(postData).pdfNombre;
+  //var fullpath = './documents' +  nombrePDF;
+  var fullpath = './documents' +  pathname;
+
+
  
   var file = fs.createReadStream(fullpath);
   var stat = fs.statSync(fullpath);
   response.setHeader('Content-Length', stat.size);
   response.setHeader('Content-Type', 'application/pdf');
-  response.setHeader('Content-Disposition', 'attachment; filename=casosdeuso.pdf');
+
+  if (pathname == "/Casos-y-hallazgos-in.pdf")
+    response.setHeader('Content-Disposition', 'attachment; filename=Casos-y-hallazgos-in.pdf');
+  else if (pathname == "/CaracteristicasPersonalidad.pdf")
+    response.setHeader('Content-Disposition', 'attachment; filename=CaracteristicasPersonalidad.pdf');
   file.pipe(response);
 
 
