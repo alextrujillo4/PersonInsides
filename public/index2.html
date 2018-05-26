@@ -3,7 +3,10 @@
 <html lang="en">
 <head>
   <link rel="icon"  href="img/favicon.png" sizes="any" />
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+<meta charset="UTF-8">
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <title>Personality Insights</title>
       <meta name = "viewport" content = "width = device-width, initial-scale = 1">
@@ -33,14 +36,31 @@
 
 <body>
 
-    <nav class="nav-extended purple darken-4">
+    <!--<nav class="nav-extended purple darken-4">
     <div class="nav-wrapper">
       <img src="img/in.png" class="img-fluid pull-xs-left" style="margin-top:24px; margin-left:32px; height:40px">
-      <ul class="right hide-on-med-and-down">
-        <li><a href="/principal"><i class="material-icons left">home</i>Regresar al menú principal</a></li>
+<span style="position:absolute; top:10px;margin-left:10px; font-size: 17px;">Conectado como: <span id = "email" style=" margin-left: 10px; font-size: 17px;"></span> </span>
+      <ul style="position:absolute; top:10px;  left:1086px;" class="right hide-on-med-and-down">
+        <li><a href="/info"><i class="material-icons left">home</i>Más información</a></li>
+<li><a href="/logout"><i class="material-icons left">exit_to_app</i></a></li>
+
       </ul>
     </div>
   </nav>
+-->
+
+<nav style="height:64px" class="nav-extended purple darken-4">
+    <div class="nav-wrapper">
+      <img src="img/in.png" class="img-fluid pull-xs-left" style="margin-top:13px; margin-left:32px; height:40px">
+
+<span style="position:absolute; margin-top: -2px; margin-left:10px; font-size: 17px;">Conectado como: <span id = "email" style=" margin-top: 10px; margin-left: 10px; font-size: 17px;"></span></span>
+     <ul style="position:absolute; top:0px;  left:1079px;"  class="right hide-on-med-and-down">
+        <li><a style="font-size:16px"; href="/info"><i class="material-icons left">info_outline</i>Más información</a></li>
+        <li><a href="/logout"><i class="material-icons left">exit_to_app</i></a></li>
+
+    </div>
+  </nav>
+
 
   <div class="section no-pad-bot" id="index-banner">
     <div class="container">
@@ -123,6 +143,8 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
+<script src="scripts/otherFunctionality.js"></script>
+
 
   </body>
 </html>

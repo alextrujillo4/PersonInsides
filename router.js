@@ -1,11 +1,32 @@
 
-function route(handle, pathname, response, postData) {
+
+function route(handle, pathname, response, postData, cookieJar) {
+
+	var emailCookie = cookieJar.get("email");
 
 	console.log("About to route a request for " + pathname);
+	console.log("Email in the cookie: " + emailCookie);
+
 
 	if (typeof handle[pathname] === 'function') {
 
-		handle[pathname](response, postData);
+		if (pathname != "/login" && pathname != "/logout"){
+
+			if (emailCookie != null){
+				handle[pathname](response, postData, cookieJar);
+			} else{
+				console.log("REDIRECCIONADO A LA PAGINA LOGIN. NO HAY COOKIE GUARDADA.");
+				handle["/"](response, postData, cookieJar);
+			}
+
+		} else {
+
+			if (pathname == "/login")
+				handle["/login"](response, postData, cookieJar);
+			else
+				handle["/logout"](response, postData, cookieJar);
+
+		}
 
 	} else if (/^\/[a-zA-Z0-9\/\.\-]*.css$/.test(pathname.toString())) {
 

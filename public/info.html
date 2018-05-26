@@ -12,14 +12,19 @@
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-    <nav class="nav-extended purple darken-4">
+    <nav style="height:64px" class="nav-extended purple darken-4">
     <div class="nav-wrapper">
-      <img src="img/in.png" class="img-fluid pull-xs-left" style="margin-top:24px; margin-left:32px; height:40px">
-      <ul class="right hide-on-med-and-down">
+      <img src="img/in.png" class="img-fluid pull-xs-left" style="margin-top:13px; margin-left:32px; height:40px">
+
+<span style="position:absolute; margin-top: -2px; margin-left:10px; font-size: 17px;">Conectado como: <span id = "email" style=" margin-top: 10px; margin-left: 10px; font-size: 17px;"></span></span>
+      <ul style="position:absolute; top:0px;  left:1020px;" class="right hide-on-med-and-down" >
         <li><a href="/principal"><i class="material-icons left">home</i>Regresar al menú principal</a></li>
+<li><a href="/logout"><i class="material-icons left">exit_to_app</i></a></li>
+
       </ul>
     </div>
   </nav>
+
 <!--PRIMER SLIDE-->
   <div id="index-banner" class="parallax-container" style="height:300px;">
     <div class="section no-pad-bot">
@@ -382,5 +387,7 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
+<script src="scripts/otherFunctionality.js"></script>
+
   </body>
 </html>

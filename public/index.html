@@ -3,7 +3,11 @@
 <html lang="en">
 <head>
   <link rel="icon"  href="img/favicon.png" sizes="any" />
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+
+<meta charset="UTF-8">
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <title>Personality Insights</title>
 
@@ -29,9 +33,10 @@
 <nav class="nav-extended purple darken-4">
     <div class="nav-wrapper">
       <img src="img/in.png" class="img-fluid pull-xs-left" style="margin-top:8px; margin-bottom:8px; margin-left:32px; height:40px">
-      <ul class="right hide-on-med-and-down">
+      <span style="margin-left:7px; font-size: 17px;">Conectado como: <span id = "email" style=" margin-left: 10px; font-size: 17px;"></span></span>
+      <ul style="position:absolute; top:0px;  left:1079px;"  class="right hide-on-med-and-down">
         <li><a style="font-size:16px"; href="/info"><i class="material-icons left">info_outline</i>Más información</a></li>
-        <li><a href="/start"><i class="material-icons left">exit_to_app</i></a></li>
+        <li><a href="/logout"><i class="material-icons left">exit_to_app</i></a></li>
       </ul>
     </div>
   </nav>
@@ -137,6 +142,7 @@
   <script src="https://code.highcharts.com/highcharts-more.js"></script>
   <script src="https://code.highcharts.com/modules/export-data.js"></script>
   <script src="scripts/charting.js"></script>
+  <script src="scripts/otherFunctionality.js"></script>
 
   </body>
 </html>

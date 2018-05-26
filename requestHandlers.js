@@ -1,6 +1,8 @@
 var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
 var fs = require('fs');
 var mysql = require('mysql');
+var querystring = require('querystring');
+
 var pool  = mysql.createPool({
  connectionLimit : 10,
  host            : 'den1.mysql1.gear.host',
@@ -9,22 +11,21 @@ var pool  = mysql.createPool({
  database        : 'proyectoflashdb'
 });
 
-var name = 'Predefinido';
-var id_user = 'predefinido@test.com';
-var valuesFromSelection = [];
-var id = 0;
-var querystring = require('querystring');
+//var name = 'Predefinido';
+//var id_user = 'predefinido@test.com';
+//var valuesFromSelection = [];
+//var id = 0;
 
-function start(response, postData) {
+
+function start(response, postData, cookieJar) {
 	console.log("Request handler 'start' was called.");
-	response.writeHead(200, {"Content-Type": "text/html"});
 	fs.readFile('./public/login.html', null, function (error,data){
 
 		if (error){
-			response.writeHead(404);
-			response.write('File not found!');
+			response.writeHead( 302, { "Location": "./public/error.html" } );
+			//response.write('File not found!');
 		} else{
-
+      response.writeHead(200, {"Content-Type": "text/html"});
 			response.write(data);
 		}
 
@@ -33,16 +34,28 @@ function start(response, postData) {
 	});
 }
 
-function info(response, postData) {
+function info(response, postData, cookieJar) {
 	console.log("Request handler 'info' was called.");
-	response.writeHead(200, {"Content-Type": "text/html"});
+  
+  //Incrementa en media hora la fecha de caducidad de la cookie que ya estaba guardada
+  var name = cookieJar.get("name");
+  var id_user = cookieJar.get("email");
+  
+  var someDate = new Date();
+  someDate.setTime(someDate.getTime() + (30*60*1000) ) ; // 30 minutes in milliseconds
+
+  cookieJar.set( "email", id_user , { httpOnly: false, expires: someDate} );
+  cookieJar.set( "name", name , { httpOnly: false, expires: someDate} );
+
+
 	fs.readFile('./public/info.html', null, function (error,data){
 
 		if (error){
-			response.writeHead(404);
-			response.write('File not found!');
+      response.writeHead( 302, { "Location": "./public/error.html" } );
+			//response.write('File not found!');
 		} else{
 
+      response.writeHead(200, {"Content-Type": "text/html"});
 			response.write(data);
 		}
 
@@ -51,11 +64,134 @@ function info(response, postData) {
 	});
 }
 
-function principal(response, postData) {
+
+function login(response, postData, cookieJar){
+
+  console.log("Request handler 'login' was called.");
+
+  //Crea por primera vez las cookies, o reemplaza los valores que habia en las cookies ya guardadas por los valores ingresados por el usuario
+  var id_user = querystring.parse(postData).email;
+  var name = querystring.parse(postData).text;
+
+  if (id_user != null){
+
+    var someDate = new Date();
+    someDate.setTime(someDate.getTime() + (30*60*1000) ) ; // 30 minutes in milliseconds
+    //someDate =  someDate.toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    //document.cookie = 'foo=bar;path=/;expires='+d.toGMTString()+';';
+
+    cookieJar.set( "email", id_user , { httpOnly: false, expires: someDate} );
+    cookieJar.set( "name", name , { httpOnly: false, expires: someDate } );
+
+    var nextPage = "";
+    pool.query("SELECT id FROM Profile WHERE id_user = '"+id_user+"' order by id desc LIMIT 1;",function(err,rows){
+              if(err) throw err;
+              //console.log(rows == NULL);
+              console.log(rows.length);
+
+              if(rows.length == 0){
+                console.log("\nNO EXISTOOOO\n");
+                fs.readFile('./public/index2.html', null, function (error,data){
+
+                  if (error){
+                    response.writeHead( 302, { "Location": "./public/error.html" } );
+                    console.log("No file found at location ... index2");
+                    //response.write('File not found! index2');
+                  } else{
+                    response.writeHead(200, {"Content-Type": "text/html"});
+                    response.write(data);
+                  }
+
+                  response.end();
+
+                });
+              }
+              else{
+                console.log("\nSI EXISTOOOOO\n");
+                fs.readFile('./public/index.html', null, function (error,data){
+
+                  if (error){
+                    response.writeHead( 302, { "Location": "./public/error.html" } );
+                    console.log("No file found at location ... index");
+                    //response.write('File not found! index');
+                  } else{
+                    response.writeHead(200, {"Content-Type": "text/html"});
+                    response.write(data);
+                  }
+
+                  response.end();
+
+                });
+              }
+      });
+
+    } else {
+
+        console.log("NO SE INGRESO NINGUN CORREO. LOGIN NO REALIZADO.");
+        fs.readFile('./public/login.html', null, function (error,data){
+
+        if (error){
+          response.writeHead( 302, { "Location": "./public/error.html" } );
+          //response.write('File not found!');
+        } else{
+          response.writeHead(200, {"Content-Type": "text/html"});
+          response.write(data);
+        }
+
+        response.end();
+
+      });
+
+
+    }
+
+}
+
+
+function logout(response, postData, cookieJar){
+
+  console.log("Request handler 'logout' was called.");
+
+
+  //Destruye la cookie dandole una fecha de expiracion ya pasada
+  var someDate = new Date();
+  someDate.setTime(someDate.getTime() - 500000 ) ; 
+
+  cookieJar.set( "email", "dummy", { httpOnly: false, expires: someDate} );
+  cookieJar.set( "name", "dummy" , { httpOnly: false, expires: someDate} );
+  
+  fs.readFile('./public/login.html', null, function (error,data){
+
+    if (error){
+      response.writeHead( 302, { "Location": "./public/error.html" } );
+      //response.write('File not found!');
+    } else{
+      response.writeHead(200, {"Content-Type": "text/html"});
+      response.write(data);
+    }
+
+    response.end();
+
+  });
+
+
+}
+
+
+function principal(response, postData, cookieJar) {
 	console.log("Request handler 'principal' was called.");
   //Get name and email from login (for execution of queries)
-  name = querystring.parse(postData).text;
-  id_user = querystring.parse(postData).email;
+  
+  var name = cookieJar.get("name");
+  var id_user = cookieJar.get("email");
+  
+  var someDate = new Date();
+  someDate.setTime(someDate.getTime() + (30*60*1000) ) ; // 30 minutes in milliseconds
+
+  cookieJar.set( "email", id_user , { httpOnly: false, expires: someDate} );
+  cookieJar.set( "name", name , { httpOnly: false, expires: someDate} );
+
+
   var nextPage = "";
   pool.query("SELECT id FROM Profile WHERE id_user = '"+id_user+"' order by id desc LIMIT 1;",function(err,rows){
             if(err) throw err;
@@ -67,9 +203,9 @@ function principal(response, postData) {
               fs.readFile('./public/index2.html', null, function (error,data){
 
                 if (error){
+                  response.writeHead( 302, { "Location": "./public/error.html" } );
                   console.log("No file found at location ... index2");
-                  response.writeHead(404);
-                  response.write('File not found! index2');
+                  //response.write('File not found! index2');
                 } else{
                   response.writeHead(200, {"Content-Type": "text/html"});
                   response.write(data);
@@ -84,9 +220,9 @@ function principal(response, postData) {
               fs.readFile('./public/index.html', null, function (error,data){
 
                 if (error){
+                  response.writeHead( 302, { "Location": "./public/error.html" } );
                   console.log("No file found at location ... index");
-                  response.writeHead(404);
-                  response.write('File not found! index');
+                  //response.write('File not found! index');
                 } else{
                   response.writeHead(200, {"Content-Type": "text/html"});
                   response.write(data);
@@ -101,15 +237,27 @@ function principal(response, postData) {
 }
 
 
-function upload(response, postData) {
+function upload(response, postData, cookieJar) {
 	console.log("Request handler 'upload' was called.");
+  
+
+  //Incrementa en media hora la fecha de caducidad de la cookie que ya estaba guardada
+  var name = cookieJar.get("name");
+  var id_user = cookieJar.get("email");
+  
+  var someDate = new Date();
+  someDate.setTime(someDate.getTime() + (30*60*1000) ) ; // 30 minutes in milliseconds
+
+  cookieJar.set( "email", id_user , { httpOnly: false, expires: someDate} );
+  cookieJar.set( "name", name , { httpOnly: false, expires: someDate} );
+
 
 	fs.readFile('./public/index2.html', null, function (error,data){
 
 		if (error){
+      response.writeHead( 302, { "Location": "./public/error.html" } );
 			console.log("No file found at location");
-			response.writeHead(404);
-			response.write('File not found!');
+			//response.write('File not found!');
 		} else{
 			response.writeHead(200, {"Content-Type": "text/html"});
 			response.write(data);
@@ -214,10 +362,30 @@ function pdfService(response,postData, pathname){
 }
 
 
-function piService(response,postData){
+function piService(response,postData, cookieJar){
 	console.log("Request handler 'piService' was called.");
 	console.log("'piService' handler received: ");
+
   console.log(querystring.parse(postData).textAreaContent);
+
+
+
+
+  //Incrementa en media hora la fecha de caducidad de la cookie que ya estaba guardada
+  var name = cookieJar.get("name");
+  var id_user = cookieJar.get("email");
+  
+  var someDate = new Date();
+  someDate.setTime(someDate.getTime() + (30*60*1000) ) ; // 30 minutes in milliseconds
+
+  cookieJar.set( "email", id_user , { httpOnly: false, expires: someDate} );
+  cookieJar.set( "name", name , { httpOnly: false, expires: someDate} );
+
+
+
+  var valuesFromSelection = [];
+  var id = 0;
+
 
 	var personality_insights = new PersonalityInsightsV3({
 	    username: 'ebc5e198-5f1b-4353-ae47-810792af98d0',
@@ -334,9 +502,10 @@ function piService(response,postData){
       fs.readFile('./public/index.html', null, function (error,data){
 
         if (error){
-          response.writeHead(404);
-          response.write('File not found!');
+          response.writeHead( 302, { "Location": "./public/error.html" } );
+          //response.write('File not found!');
         } else{
+          response.writeHead(200, {"Content-Type": "text/html"});
           response.write(data);
         }
         response.end();
@@ -346,8 +515,22 @@ function piService(response,postData){
 }
 
 
-function lastProfile(response,postData){
+function lastProfile(response,postData, cookieJar){
   console.log("Request handler 'lastProfile' was called.");
+
+
+
+  //Incrementa en media hora la fecha de caducidad de la cookie que ya estaba guardada
+  var name = cookieJar.get("name");
+  var id_user = cookieJar.get("email");
+  
+  var someDate = new Date();
+  someDate.setTime(someDate.getTime() + (30*60*1000) ) ; // 30 minutes in milliseconds
+ //someDate.toISOString().replace(/T/, ' ').replace(/\..+/, '')
+  cookieJar.set( "email", id_user , { httpOnly: false, expires: someDate} );
+  cookieJar.set( "name", name , { httpOnly: false, expires: someDate} );
+
+
   //Query SELECT con name y id_user
   var arraySelects = [];
   var currentID;
@@ -357,7 +540,9 @@ function lastProfile(response,postData){
       currentID = arraySelects[0].id;
       pool.query("select trait_id, percentile from trait t join profile p ON t.profile_id = p.id where (t.trait_id = 'big5_agreeableness' or t.trait_id = 'big5_openness' or t.trait_id = 'big5_conscientiousness' or t.trait_id = 'big5_extraversion' or t.trait_id = 'big5_neuroticism') and p.id = '"+currentID+"'order by t.trait_id ASC;", function (err, result, fields) {
           if (err) throw err;
-          response.writeHead(200, {"Content-Type": "application/json"});
+          
+          //response.writeHead(200, {"Content-Type": "application/json"});
+          
           var personalityArray = [];
           for (var i = 0;i < result.length; i++) {
               personalityArray.push({percentile: result[i].percentile});
@@ -381,6 +566,8 @@ function lastProfile(response,postData){
                     needs: needsArray,
                     values: valuesArray
                   });
+
+                  response.writeHead(200, {"Content-Type": "application/json"});
                   response.end(json);
                 });
             });
@@ -388,7 +575,8 @@ function lastProfile(response,postData){
     });
 }
 
-
+exports.login = login;
+exports.logout = logout;
 exports.principal = principal;
 exports.info = info;
 exports.start = start;

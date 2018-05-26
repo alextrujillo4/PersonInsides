@@ -1,7 +1,17 @@
 var http = require("http");
 var url = require("url");
+var fs = require('fs');
+var Cookies = require("cookies");
 
+//var someTools = require('someTools');
 
+/*
+var https = require("https");
+
+var options = {
+  key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+  cert: fs.readFileSync('test/fixtures/keys/agent2-cert.pem')
+};*/
 
 
 function start(route, handle) {
@@ -10,7 +20,11 @@ function start(route, handle) {
 
 		var postData = "";
 		var pathname = url.parse(request.url).pathname;
+		var cookieJar = new Cookies( request , response /*, { "keys": keys } */);
+		//cookieJar.set( "email", "yourmom@gmail.com", { httpOnly: false, expires: new Date(new Date().getTime()+86409000).toUTCString()} );
+
 		console.log("Request for " + pathname + " received.");
+		//console.log('JSON = ' + JSON.stringify(cookies));
 
 		request.setEncoding("utf8");
 
@@ -24,11 +38,12 @@ function start(route, handle) {
 		});
 
 		request.addListener("end", function() {
-			route(handle, pathname, response, postData);
+			route(handle, pathname, response, postData, cookieJar);
 			console.log("\n Add listener end \n");
 		});
 	}
 
+	//https.createServer(options, onRequest).listen(8888);
 	http.createServer(onRequest).listen(8888);
 	console.log("Server has started.");
 }
