@@ -10,7 +10,7 @@ function route(handle, pathname, response, postData, cookieJar) {
 
 	if (typeof handle[pathname] === 'function') {
 
-		if (pathname != "/login" && pathname != "/logout"){
+		if (pathname != "/login" && pathname != "/" && pathname != "/start"){
 
 			if (emailCookie != null){
 				handle[pathname](response, postData, cookieJar);
@@ -21,10 +21,19 @@ function route(handle, pathname, response, postData, cookieJar) {
 
 		} else {
 
-			if (pathname == "/login")
-				handle["/login"](response, postData, cookieJar);
-			else
-				handle["/logout"](response, postData, cookieJar);
+			if (emailCookie != null)
+			{
+				handle["/principal"](response, postData, cookieJar);
+			} else{
+
+				handle[pathname](response, postData, cookieJar);
+				/*
+				if (pathname == "/login")
+					handle["/login"](response, postData, cookieJar);
+				else
+					handle["/logout"](response, postData, cookieJar);*/
+			}
+			
 
 		}
 
