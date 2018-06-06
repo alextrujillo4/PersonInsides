@@ -1,0 +1,2 @@
+usuario:tecuser
+contraseña:12345
