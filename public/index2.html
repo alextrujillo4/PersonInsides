@@ -41,8 +41,8 @@
       <img src="img/in.png" class="img-fluid pull-xs-left" style="margin-top:24px; margin-left:32px; height:40px">
 <span style="position:absolute; top:10px;margin-left:10px; font-size: 17px;">Conectado como: <span id = "email" style=" margin-left: 10px; font-size: 17px;"></span> </span>
       <ul style="position:absolute; top:10px;  left:1086px;" class="right hide-on-med-and-down">
-        <li><a href="/info"><i class="material-icons left">home</i>Más información</a></li>
-<li><a href="/logout"><i class="material-icons left">exit_to_app</i></a></li>
+        <li><a href="/Informacion"><i class="material-icons left">home</i>Más información</a></li>
+<li><a href="/LogoutAction"><i class="material-icons left">exit_to_app</i></a></li>
 
       </ul>
     </div>
@@ -55,8 +55,8 @@
 
 <span style="position:absolute; margin-top: -2px; margin-left:10px; font-size: 17px;">Conectado como: <span id = "email" style=" margin-top: 10px; margin-left: 10px; font-size: 17px;"></span></span>
      <ul style="position:absolute; top:0px;  left:1079px;"  class="right hide-on-med-and-down">
-        <li><a style="font-size:16px"; href="/info"><i class="material-icons left">info_outline</i>Más información</a></li>
-        <li><a href="/logout"><i class="material-icons left">exit_to_app</i></a></li>
+        <li><a style="font-size:16px"; href="/Informacion"><i class="material-icons left">info_outline</i>Más información</a></li>
+        <li><a href="/LogoutAction"><i class="material-icons left">exit_to_app</i></a></li>
 
     </div>
   </nav>
@@ -95,9 +95,10 @@
         </div>
       <!-- Si son menos de 500 palabras, no deja dar click -->
       <input type="submit" class="deep-purple darken-1 btn" value="Analizar Texto">
-      <input type="submit" class="blue accent-3 btn" value="Analizar vía Twitter" >
+      <input type="submit" id= "twitterButton" href="/PIServiceTwitter" class="blue accent-3 btn" value="Analizar vía Twitter" >
       </div>
       </form>
+
       <!--END BUTTON PI-->
     </div>
       <br>
