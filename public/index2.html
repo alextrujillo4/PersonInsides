@@ -41,8 +41,8 @@
       <img src="img/in.png" class="img-fluid pull-xs-left" style="margin-top:24px; margin-left:32px; height:40px">
 <span style="position:absolute; top:10px;margin-left:10px; font-size: 17px;">Conectado como: <span id = "email" style=" margin-left: 10px; font-size: 17px;"></span> </span>
       <ul style="position:absolute; top:10px;  left:1086px;" class="right hide-on-med-and-down">
-        <li><a href="/info"><i class="material-icons left">home</i>Más información</a></li>
-<li><a href="/logout"><i class="material-icons left">exit_to_app</i></a></li>
+        <li><a href="/Informacion"><i class="material-icons left">home</i>Más información</a></li>
+<li><a href="/LogoutAction"><i class="material-icons left">exit_to_app</i></a></li>
 
       </ul>
     </div>
@@ -55,8 +55,8 @@
 
 <span style="position:absolute; margin-top: -2px; margin-left:10px; font-size: 17px;">Conectado como: <span id = "email" style=" margin-top: 10px; margin-left: 10px; font-size: 17px;"></span></span>
      <ul style="position:absolute; top:0px;  left:1079px;"  class="right hide-on-med-and-down">
-        <li><a style="font-size:16px"; href="/info"><i class="material-icons left">info_outline</i>Más información</a></li>
-        <li><a href="/logout"><i class="material-icons left">exit_to_app</i></a></li>
+        <li><a style="font-size:16px"; href="/Informacion"><i class="material-icons left">info_outline</i>Más información</a></li>
+        <li><a href="/LogoutAction"><i class="material-icons left">exit_to_app</i></a></li>
 
     </div>
   </nav>
@@ -84,8 +84,8 @@
             }
         </script>
         <!--START BUTTON  This sends all content data to Personality Insights-->
-        <!--<form action="/PIService" method="post" class="col s8  white">-->
-      <form action="/PIService" method="post" class="col s8  white" name="escrito" onsubmit="checkform(event)">
+        <!--<form action="/PIServiceEssay" method="post" class="col s8  white">-->
+      <form action="/PIServiceEssay" method="post" class="col s8  white" name="escrito" onsubmit="checkform(event)">
         <div class="row" style="padding:40px;">
           <div class="input-field card-content col s12">
             <textarea id="textarea2" name = "textAreaContent" class="materialize-textarea" data-length="1000"></textarea>
@@ -98,8 +98,12 @@
 -->
       <!-- Si son menos de 500 palabras, no deja dar click -->
       <input type="submit" class="deep-purple darken-1 btn" value="Analizar">
+
+<a id= "twitterButton" href="/PIServiceTwitter" style="font-size:14px; color: white; margin-left:20px;" class=" blue accent-3 btn ">Análisis por Twitter<i style="padding-left:0.8em"class="fa fa-twitter"></i></a>
+
       </div>
       </form>
+
       <!--END BUTTON PI-->
     </div>
       <br>

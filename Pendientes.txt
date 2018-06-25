@@ -1,0 +1,21 @@
+-Analisis de un ensayo
+1)Implementar en front-end y back-end la opcion de especificar el idioma del ensayo. Se
+  asumio que el servicio PI puede identificar el idioma del ensayo aunque no se le
+  informe esto en los parametros, mas realmente NO estamos seguros. Por tanto, es mejor
+  validar esto (decirle de antemano al servicio PI en que idioma esta el ensayo, dandole 
+  para ello al usuario la opcion de seleccionar el idioma de su ensayo via front-end).
+
+-Analisis de un timeline de twitter
+1)Implementar en front-end y back-end la opcion de especificar el idioma de sus tweets. ES
+  SEGURO (ya se verifico) que al obtener los tweets del usuario, se conoce y guarda
+  el idioma en que está cada tweet, pero para el analisis de estos con el servicio PI hay
+  que especificar un idioma en los parametros; al hacerlo, seran descartados del analisis 
+  todos los tweets que esten en un idioma diferente al que se especifico en los parametros.
+  Por ello, en el supuesto caso que el usuario postee tweets en ingles y en español, 
+  el usuario deberia elegir el idioma en el cual ha posteado mas tweets. ¿Qué pasa si 
+  no se especifica al servicio PI en los parametros el idioma? 2 posibilidades: a) el servicio
+  PI es capaz de identificar el idioma de cada tweet e incorporarlo en su analisis sin problema
+  b) el servicio PI utiliza el idioma ingles por default, y por tanto todos los tweets
+  que esten en otro idioma son descartados. Puesto que no sabemos cual opcion ocurre, es mejor
+  validar esto pidiendole de antemano al usuario en qué idioma desea que sus tweets sean
+  analizados.

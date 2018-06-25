@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/alextrujillo4/PersonInsides/issues"
   },
-  "homepage": "https://github.com/alextrujillo4/PersonInsides#readme"
+  "homepage": "https://github.com/alextrujillo4/PersonInsides#readme",
+  "dependencies": {
+    "async": "^2.6.1"
+  }
 }
